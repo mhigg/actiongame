@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_debug">
+      <UniqueIdentifier>{89202e38-2b33-4399-998a-53ec527f6ba2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_key.cpp" />
+    <ClCompile Include="..\Classes\input\OPRT_touch.cpp" />
+    <ClCompile Include="..\Classes\AnimationMng.cpp" />
+    <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AreaCheck.cpp" />
+    <ClCompile Include="..\Classes\_DebugConOut.cpp">
+      <Filter>_debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DIR.cpp" />
+    <ClCompile Include="CreateAnim.cpp" />
+    <ClCompile Include="CheckCollided.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_key.h" />
+    <ClInclude Include="..\Classes\input\OPRT_state.h" />
+    <ClInclude Include="..\Classes\input\OPRT_touch.h" />
+    <ClInclude Include="..\Classes\AnimationMng.h" />
+    <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AreaCheck.h" />
+    <ClInclude Include="..\Classes\_DebugConOut.h">
+      <Filter>_debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DIR.h" />
+    <ClInclude Include="CreateAnim.h" />
+    <ClInclude Include="CheckCollided.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

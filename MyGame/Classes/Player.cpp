@@ -63,7 +63,7 @@ void Player::update(float delta)
 {
 	STATE oldState = nowState;
 	auto pos = this->getPosition();
-	Vec2 size = { 50,140 };
+	Vec2 size = { 50,120 };
 
 	(this->*updater)();
 	
@@ -74,11 +74,6 @@ void Player::update(float delta)
 	}
 	else
 	{
-		if (gravity)
-		{
-			this->setPosition(Vec2(pos.x, pos.y - speed));
-		}
-
 		CheckGID();
 	}
 	
@@ -93,6 +88,11 @@ void Player::update(float delta)
 			break;
 		case STATE::MOVE:
 			gravity = true;
+			this->runAction(
+				RepeatForever::create(
+					Animate::create(AnimationCache::getInstance()->getAnimation("player-run"))
+				)
+			);
 			updater = &Player::UpdateMove;
 			break;
 		case STATE::JUMP:
@@ -123,8 +123,8 @@ void Player::UpdateIdle(void)
 			nowState = STATE::MOVE;
 			auto flip = FlipX::create((dirID == DIR::LEFT ? true : false));
 			this->runAction(flip);
-			auto anim = AnimationCache::getInstance()->getAnimation("player-run");
-			this->runAction(RepeatForever::create(Animate::create(anim)));
+			//auto anim = AnimationCache::getInstance()->getAnimation("player-run");
+			//this->runAction(RepeatForever::create(Animate::create(anim)));
 			return;
 		}
 	}
@@ -271,43 +271,61 @@ void Player::UpdateJump(void)
 
 void Player::CheckGID(void)
 {
+	// get mapChipData
 	auto director = Director::getInstance();
 	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLay")->getChildByName("mapData");
-
 	auto col = map->getLayer("ground");
+	auto mapSize = map->getMapSize();
 
 	auto tmpPos = this->getPosition();
-	Vec2 size = { 50,120 };
+	auto size = Vec2{ 50,120 };
 
-	auto mapSizeY = map->getMapSize().height;
+	if (gravity)
+	{
+		if (col->getTileGIDAt(Vec2(tmpPos.x / 48, mapSize.height - ((tmpPos.y - speed) / 48))) != 0)
+		{
+			this->setPosition(Vec2(tmpPos.x, tmpPos.y - speed));
+		}
+	}
 
-	auto uprightpos = Vec2((tmpPos.x + size.x) / 48, mapSizeY - (tmpPos.y + size.y / 2) / 48);
-	auto downrightpos = Vec2((tmpPos.x + size.x) / 48, mapSizeY - (tmpPos.y - size.y / 2) / 48);
+	auto rightpos		= Vec2((tmpPos.x + size.x / 2) / 48, tmpPos.y / 48);
+	auto uprightpos		= Vec2((tmpPos.x + size.x / 2) / 48, mapSize.height - (tmpPos.y + size.y / 2) / 48);
+	auto downrightpos	= Vec2((tmpPos.x + size.x / 2) / 48, mapSize.height - (tmpPos.y - size.y / 2) / 48);
 
-	if (col->getTileGIDAt(uprightpos) != 0 || col->getTileGIDAt(downrightpos) != 0)
+	if (col->getTileGIDAt(rightpos)		 != 0
+	 || col->getTileGIDAt(uprightpos)	 != 0
+	 || col->getTileGIDAt(downrightpos)	 != 0)
 	{
 		this->setPosition(Vec2(tmpPos.x - speed, tmpPos.y));
 	}
 
-	auto upleftpos = Vec2((tmpPos.x - size.x) / 48, mapSizeY - (tmpPos.y + size.y / 2) / 48);
-	auto downleftpos = Vec2((tmpPos.x - size.x) / 48, mapSizeY - (tmpPos.y - size.y / 2) / 48);
+	auto leftpos		= Vec2((tmpPos.x - size.x / 2) / 48, tmpPos.y / 48);
+	auto upleftpos		= Vec2((tmpPos.x - size.x / 2) / 48, mapSize.height - (tmpPos.y + size.y / 2) / 48);
+	auto downleftpos	= Vec2((tmpPos.x - size.x / 2) / 48, mapSize.height - (tmpPos.y - size.y / 2) / 48);
 
-	if (col->getTileGIDAt(upleftpos) != 0 || col->getTileGIDAt(downleftpos) != 0)
+	if (col->getTileGIDAt(leftpos)		!= 0
+	 || col->getTileGIDAt(upleftpos)	!= 0
+	 || col->getTileGIDAt(downleftpos)	!= 0)
 	{
 		this->setPosition(Vec2(tmpPos.x + speed, tmpPos.y));
 	}
 
-	auto legpos = Vec2((tmpPos.x) / 48, (mapSizeY - (tmpPos.y - size.y / 2) / 48));
+	auto legpos = Vec2(tmpPos.x / 48, (mapSize.height - (tmpPos.y - size.y / 2) / 48));
 
-	if (col->getTileGIDAt(legpos) != 0)
+	if ((col->getTileGIDAt(downleftpos)  != 0 && col->getTileGIDAt(legpos) != 0)
+	 || (col->getTileGIDAt(downrightpos) != 0 && col->getTileGIDAt(legpos) != 0))
 	{
 		TRACE("leg.x:%f,leg.y:%f\n", legpos.x, legpos.y);
-//		jumpFlag = false;
-		this->setPosition(Vec2(tmpPos.x, tmpPos.y + speed));
-//		this->setPosition(Vec2(legpos.x * 48, mapSizeY - size.y / 2 - (legpos.y + 1) * 48));
+		this->setPosition(Vec2(tmpPos.x, tmpPos.y + (tmpPos.y - ((mapSize.height - legpos.y) + 1) * 48)));
+		//gravity = false;
 	}
+	//else
+	//{
+	//	gravity = true;
+	//	TRACE("NO HIT");
+	//}
 
-	auto headpos = Vec2((tmpPos.x) / 48, (mapSizeY - (tmpPos.y + size.y / 2) / 48));
+	auto headpos = Vec2(tmpPos.x / 48, (mapSize.height - (tmpPos.y + size.y / 2) / 48));
 
 	if (col->getTileGIDAt(headpos) != 0)
 	{

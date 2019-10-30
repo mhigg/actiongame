@@ -2,12 +2,11 @@
 
 USING_NS_CC;
 
-void CheckHitObj::operator()(cocos2d::Vec2 position)
+void CheckHitObj::operator()(cocos2d::Vec2 position, cocos2d::Vec2 distance)
 {
-	//auto director = Director::getInstance();
-	//auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLay")->getChildByName("mapData");
-
-	//auto col = map->getLayer("ground");
+	auto director = Director::getInstance();
+	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLay")->getChildByName("mapData");
+	auto col = map->getLayer("ground");
 
 	//auto tmpPos = this->getPosition();
 	//Vec2 size = { 50,120 };
@@ -47,4 +46,12 @@ void CheckHitObj::operator()(cocos2d::Vec2 position)
 	//	jumpFlag = false;
 	//	this->setPosition(Vec2(tmpPos.x, tmpPos.y - speed));
 	//}
+}
+
+void CheckOverArea::operator()(cocos2d::Sprite * sprite)
+{
+}
+
+void CheckHitSprites::operator()(cocos2d::Sprite * sprite1, cocos2d::Sprite * sprite2)
+{
 }

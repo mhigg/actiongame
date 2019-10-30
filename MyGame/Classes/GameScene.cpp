@@ -166,12 +166,12 @@ bool GameScene::layerSetUp(void)
 
 	// create mapInfo
 	
-	stageMap = TMXTiledMap::create("secondmap.tmx");
+	stageMap = TMXTiledMap::create("maps/thirdmap.tmx");
 	auto frontBlock = stageMap->getLayer("front_objects");
 	frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	auto isGround = stageMap->getLayer("isground");
-	isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	auto wall = stageMap->getLayer("water");
+	//auto isGround = stageMap->getLayer("isground");
+	//isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+	auto wall = stageMap->getLayer("walls");
 	wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
 	stageMap->setAnchorPoint(Vec2::ZERO);
 	stageMap->setPosition(Vec2::ZERO);
@@ -188,8 +188,7 @@ bool GameScene::layerSetUp(void)
 	{
 		// load successed
 		// position the sprite on the center of the screen
-		player->setPosition(Vec2(480,240));
-		player->setContentSize({ 50, 140 });
+		player->setPosition(Vec2(640,240));
 	}
 
 	// add sprites on each layers;
@@ -209,15 +208,15 @@ bool GameScene::layerSetUp(void)
 	this->addChild(frontLayer, static_cast<int>(LAYER::MIDDLE));
 
 	//@@@test code
-		using LambdaTbl = bool(*)(cocos2d::Sprite&);
-		LambdaTbl la = [](Sprite& sp)
-		{
-			auto pl = ((Player&)sp).createPlayer();
-			auto pos = ((Player&)sp).getPosition();
-			return true;
-		};
-		auto test = la(*player);
-		std::map<LambdaTbl, LambdaTbl> maps;
+		//using FunctionPointer = bool(*)(cocos2d::Sprite&);
+		//FunctionPointer funcPt = [](Sprite& sp)
+		//{
+		//	auto pl = ((Player&)sp).createPlayer();
+		//	auto pos = ((Player&)sp).getPosition();
+		//	return true;
+		//};
+		//auto test = funcPt(*player);
+		//std::map<FunctionPointer, FunctionPointer> maps;
 
 	return true;
 }

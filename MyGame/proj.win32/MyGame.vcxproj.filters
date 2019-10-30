@@ -33,8 +33,8 @@
       <Filter>_debug</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\DIR.cpp" />
-    <ClCompile Include="CreateAnim.cpp" />
-    <ClCompile Include="CheckCollided.cpp" />
+    <ClCompile Include="..\Classes\CheckCollided.cpp" />
+    <ClCompile Include="..\Classes\CreateAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -56,8 +56,8 @@
       <Filter>_debug</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DIR.h" />
-    <ClInclude Include="CreateAnim.h" />
-    <ClInclude Include="CheckCollided.h" />
+    <ClInclude Include="..\Classes\CheckCollided.h" />
+    <ClInclude Include="..\Classes\CreateAnim.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -3,6 +3,10 @@
 
 struct CreateAnim
 {
-	void operator()(std::string unit, std::string act, int num);
+	// Create Animation
+	// @param spName  Sprite name
+	// @param act  Sprite action
+	// @param num  Action frames
+	void operator()(const std::string& type, const std::string& spName, const std::string& act, const int num);
 };
 

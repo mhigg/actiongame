@@ -1,6 +1,6 @@
 #pragma once
 #include "cocos2d.h"
-#include "input/OPRT_state.h"
+#include <input/OPRT_state.h>
 
 //USING_NS_CC;
 
@@ -34,6 +34,8 @@ private:
 	void UpdateIdle(void);	// ’â~ó‘Ô
 	void UpdateMove(void);	// ˆÚ“®ó‘Ô
 	void UpdateJump(void);	// ¼Ş¬İÌßó‘Ô
+
+
 
 	void CheckGID(void);	// Œ»İ‚ÌÀ•W‚ÌGID‚ÌŒŸõ
 

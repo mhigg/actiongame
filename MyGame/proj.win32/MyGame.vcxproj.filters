@@ -13,6 +13,12 @@
     <Filter Include="_debug">
       <UniqueIdentifier>{89202e38-2b33-4399-998a-53ec527f6ba2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="unit">
+      <UniqueIdentifier>{72e4c630-46d1-47e5-86c9-cd0a20085416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{975ef3a2-4136-4306-9fe6-f045c3273f0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,20 +27,29 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\input\OPRT_key.cpp" />
-    <ClCompile Include="..\Classes\input\OPRT_touch.cpp" />
     <ClCompile Include="..\Classes\AnimationMng.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AreaCheck.cpp" />
     <ClCompile Include="..\Classes\_DebugConOut.cpp">
       <Filter>_debug</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\DIR.cpp" />
     <ClCompile Include="..\Classes\CheckCollided.cpp" />
     <ClCompile Include="..\Classes\CreateAnim.cpp" />
+    <ClCompile Include="..\Classes\unit\Enemy.cpp">
+      <Filter>unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\unit\Player.cpp">
+      <Filter>unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_key.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_touch.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="SetDir.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -43,21 +58,32 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\input\OPRT_key.h" />
-    <ClInclude Include="..\Classes\input\OPRT_state.h" />
-    <ClInclude Include="..\Classes\input\OPRT_touch.h" />
     <ClInclude Include="..\Classes\AnimationMng.h" />
-    <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AreaCheck.h" />
     <ClInclude Include="..\Classes\_DebugConOut.h">
       <Filter>_debug</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DIR.h" />
     <ClInclude Include="..\Classes\CheckCollided.h" />
     <ClInclude Include="..\Classes\CreateAnim.h" />
+    <ClInclude Include="..\Classes\unit\Enemy.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\unit\Player.h">
+      <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_key.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_state.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\input\OPRT_touch.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="SetDir.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

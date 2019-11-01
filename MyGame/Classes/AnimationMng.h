@@ -1,17 +1,14 @@
 #pragma once
 #include <cocos2d.h>
 #include <memory>
-
+#include <map>
 
 class AnimationMng
 {
 public:
-	static AnimationMng& GetInstance(void)
-	{
-	}
-
-private:
 	AnimationMng();
 	~AnimationMng();
+
+private:
 };
 

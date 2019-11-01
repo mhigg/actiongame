@@ -24,9 +24,10 @@
 
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
-#include "Player.h"
-#include "input/OPRT_key.h"
-#include "input/OPRT_touch.h"
+#include <unit/Player.h>
+#include <unit/Enemy.h>
+#include <input/OPRT_key.h>
+#include <input/OPRT_touch.h>
 
 USING_NS_CC;
 
@@ -65,9 +66,9 @@ bool GameScene::init()
                                            "CloseSelected.png",
                                            CC_CALLBACK_1(GameScene::menuCloseCallback, this));
 
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
+    if (closeItem == nullptr
+	 || closeItem->getContentSize().width <= 0
+	 || closeItem->getContentSize().height <= 0)
     {
         problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
     }
@@ -135,18 +136,9 @@ void GameScene::update(float delta)
 
 bool GameScene::layerSetUp(void)
 {
-	// create layer
-
+	// backImageLayer
 	auto backLayer = Layer::create();
-	backLayer->setName("backLay");
-	auto groundLayer = Layer::create();
-	groundLayer->setName("groundLay");
-	auto mainLayer = Layer::create();
-	mainLayer->setName("mainLay");
-	auto frontLayer = Layer::create();
-	frontLayer->setName("frontLay");
-
-	// create image sprite
+	backLayer->setName("backLayer");
 
 	auto backImgBefor = Sprite::create("image/Environment/background.png");
 	backImgBefor->setAnchorPoint(Vec2::ZERO);
@@ -156,16 +148,23 @@ bool GameScene::layerSetUp(void)
 	backImgAfter->setAnchorPoint(Vec2::ZERO);
 	backImgAfter->setPosition(Vec2::ZERO + Vec2(720, 0));
 
-	auto frontImgBefor = Sprite::create("image/Environment/middleground.png");
-	frontImgBefor->setAnchorPoint(Vec2::ZERO);
-	frontImgBefor->setPosition(Vec2::ZERO);
+	// middleImageLayer
+	auto middleLayer = Layer::create();
+	middleLayer->setName("frontLayer");
 
-	auto frontImgAfter = Sprite::create("image/Environment/middleground.png");
-	frontImgAfter->setAnchorPoint(Vec2::ZERO);
-	frontImgAfter->setPosition(Vec2::ZERO + Vec2(816, 0));
+	auto middleImgBefor = Sprite::create("image/Environment/middleground.png");
+	middleImgBefor->setAnchorPoint(Vec2::ZERO);
+	middleImgBefor->setPosition(Vec2::ZERO);
 
-	// create mapInfo
-	
+	auto middleImgAfter = Sprite::create("image/Environment/middleground.png");
+	middleImgAfter->setAnchorPoint(Vec2::ZERO);
+	middleImgAfter->setPosition(Vec2::ZERO + Vec2(816, 0));
+
+	// groundLayer
+	auto groundLayer = Layer::create();
+	groundLayer->setName("groundLayer");
+
+	// map
 	stageMap = TMXTiledMap::create("maps/thirdmap.tmx");
 	auto frontBlock = stageMap->getLayer("front_objects");
 	frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
@@ -177,7 +176,10 @@ bool GameScene::layerSetUp(void)
 	stageMap->setPosition(Vec2::ZERO);
 	stageMap->setName("mapData");
 
-	// add "player"  set first image
+	// mainLayer
+	auto mainLayer = Layer::create();
+	mainLayer->setName("mainLayer");
+
 	cocos2d::Sprite* player = Player::createPlayer();
 	if (player == nullptr)
 	{
@@ -191,21 +193,35 @@ bool GameScene::layerSetUp(void)
 		player->setPosition(Vec2(640,240));
 	}
 
+	cocos2d::Sprite* crab = Enemy::createEnemy();
+	if (crab == nullptr)
+	{
+		// load failed
+		problemLoading("'crab-idle-1.png'");
+	}
+	else
+	{
+		// load successed
+		// position the sprite on the center of the screen
+		crab->setPosition(Vec2(200, 240));
+	}
+
 	// add sprites on each layers;
 
 	backLayer->addChild(backImgBefor);
 	backLayer->addChild(backImgAfter);
+	middleLayer->addChild(middleImgBefor);
+	middleLayer->addChild(middleImgAfter);
 	groundLayer->addChild(stageMap);
 	mainLayer->addChild(player);
-	frontLayer->addChild(frontImgBefor);
-	frontLayer->addChild(frontImgAfter);
+//	mainLayer->addChild(crab);
 
 	// add Layers on GameScene
 
 	this->addChild(backLayer, static_cast<int>(LAYER::BACK));
+	this->addChild(middleLayer, static_cast<int>(LAYER::MIDDLE));
 	this->addChild(groundLayer, static_cast<int>(LAYER::GROUND));
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
-	this->addChild(frontLayer, static_cast<int>(LAYER::MIDDLE));
 
 	//@@@test code
 		//using FunctionPointer = bool(*)(cocos2d::Sprite&);

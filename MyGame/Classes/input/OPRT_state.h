@@ -39,7 +39,7 @@ struct OPRT_state
 		};
 	};
 	virtual void Init(Node* sp) = 0;			// 入力判定処理ﾒｿｯﾄﾞの初期登録
-	virtual void UpDate(void) = 0;				// 入力情報の更新処理
+	virtual void UpdateOldInput(void) = 0;		// 入力情報の更新処理
 	virtual const OPRT_TYPE GetType(void) = 0;	// 入力装置のﾀｲﾌﾟを取得
 	const InputAry & GetInputAry(void)			// 現在の入力情報を取得
 	{

@@ -59,7 +59,7 @@ void OPRT_key::Init(Node* sp)
 	sp->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, sp);
 }
 
-void OPRT_key::UpDate(void)
+void OPRT_key::UpdateOldInput(void)
 {
 	for (auto dir : DIR())
 	{

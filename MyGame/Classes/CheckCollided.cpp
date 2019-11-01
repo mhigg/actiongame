@@ -5,7 +5,7 @@ USING_NS_CC;
 void CheckHitObj::operator()(cocos2d::Vec2 position, cocos2d::Vec2 distance)
 {
 	auto director = Director::getInstance();
-	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLay")->getChildByName("mapData");
+	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLayer")->getChildByName("mapData");
 	auto col = map->getLayer("ground");
 
 	//auto tmpPos = this->getPosition();
@@ -46,6 +46,10 @@ void CheckHitObj::operator()(cocos2d::Vec2 position, cocos2d::Vec2 distance)
 	//	jumpFlag = false;
 	//	this->setPosition(Vec2(tmpPos.x, tmpPos.y - speed));
 	//}
+}
+
+void CheckIsGround::operator()(cocos2d::Vec2 position, cocos2d::Vec2 gravity)
+{
 }
 
 void CheckOverArea::operator()(cocos2d::Sprite * sprite)

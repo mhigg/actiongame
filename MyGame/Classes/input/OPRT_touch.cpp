@@ -71,7 +71,7 @@ void OPRT_touch::Init(Node* sp)
 	sp->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, sp);
 }
 
-void OPRT_touch::UpDate(void)
+void OPRT_touch::UpdateOldInput(void)
 {
 }
 

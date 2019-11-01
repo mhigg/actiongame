@@ -1,12 +1,14 @@
 #include "Player.h"
-#include "input/OPRT_key.h"
-#include "input/OPRT_touch.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include <input/OPRT_key.h>
+#else
+#include <input/OPRT_touch.h>
+#endif
 #include "DIR.h"
 #include "CreateAnim.h"
 #include <_DebugConOut.h>
 
-
-Player * Player::createPlayer()
+Player* Player::createPlayer()
 {
 	return Player::create();
 }
@@ -37,9 +39,9 @@ Player::Player()
 
 	// creating animation
 
-	CreateAnim()("player", "idle", 4);
-	CreateAnim()("player", "run", 10);
-	CreateAnim()("player", "jump", 6);
+	CreateAnim()("player", "player", "idle", 4);
+	CreateAnim()("player", "player", "run", 10);
+	CreateAnim()("player", "player", "jump", 6);
 
 	auto cache = AnimationCache::getInstance()->getAnimation("player-idle");
 
@@ -74,6 +76,11 @@ void Player::update(float delta)
 	}
 	else
 	{
+		if (gravity)
+		{
+			this->setPosition(pos + moveSpeed[static_cast<int>(DIR::DOWN)]);
+		}
+
 		CheckGID();
 	}
 	
@@ -97,6 +104,11 @@ void Player::update(float delta)
 			break;
 		case STATE::JUMP:
 			gravity = false;
+			//auto anim = AnimationCache::getInstance()->getAnimation("player-jump");
+			//auto animation = Repeat::create(Animate::create(anim), 1);
+			//auto jump = JumpBy::create(1.0f, Vec2::ZERO, 180.0f, 1);
+			//jumpAct = this->runAction(Spawn::create(jump, animation, nullptr));
+			//CC_SAFE_RETAIN(jumpAct);
 			updater = &Player::UpdateJump;
 			break;
 		default:
@@ -105,18 +117,19 @@ void Player::update(float delta)
 			break;
 		}
 	}
-
-	input->UpDate();
+	input->UpdateOldInput();
 }
-
 
 
 // 停止状態での処理
 void Player::UpdateIdle(void)
 {
+	// 向き変更
+	// 移動処理←関数ポインタ←ホワイトリストで管理
+
 	for (auto dirID = begin(DIR()); dirID <= DIR::RIGHT; ++dirID)
 	{
-		if (input->GetInputAry()[static_cast<int>(dirID)].first & ~input->GetInputAry()[static_cast<int>(dirID)].second)
+		if (input->GetInputAry()[static_cast<int>(dirID)].first & ~(input->GetInputAry()[static_cast<int>(dirID)].second))
 		{
 			this->stopAllActions();
 			dir = dirID;
@@ -131,7 +144,7 @@ void Player::UpdateIdle(void)
 
 	//※ｼﾞｬﾝﾌﾟ処理のﾓｼﾞｭｰﾙ化？
 
-	if (input->GetInputAry()[static_cast<int>(DIR::UP)].first & ~input->GetInputAry()[static_cast<int>(DIR::UP)].second)
+	if (input->GetInputAry()[static_cast<int>(DIR::UP)].first & ~(input->GetInputAry()[static_cast<int>(DIR::UP)].second))
 	{
 		jumpFlag = true;
 		this->stopAllActions();
@@ -182,7 +195,7 @@ void Player::UpdateMove(void)
 		nowState = STATE::IDLE;
 	}
 
-	if (input->GetInputAry()[static_cast<int>(DIR::UP)].first & ~input->GetInputAry()[static_cast<int>(DIR::UP)].second)
+	if (input->GetInputAry()[static_cast<int>(DIR::UP)].first & ~(input->GetInputAry()[static_cast<int>(DIR::UP)].second))
 	{
 		jumpFlag = true;
 		this->stopAllActions();
@@ -273,20 +286,12 @@ void Player::CheckGID(void)
 {
 	// get mapChipData
 	auto director = Director::getInstance();
-	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLay")->getChildByName("mapData");
+	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLayer")->getChildByName("mapData");
 	auto col = map->getLayer("ground");
 	auto mapSize = map->getMapSize();
 
 	auto tmpPos = this->getPosition();
 	auto size = Vec2{ 50,120 };
-
-	if (gravity)
-	{
-		if (col->getTileGIDAt(Vec2(tmpPos.x / 48, mapSize.height - ((tmpPos.y - speed) / 48))) != 0)
-		{
-			this->setPosition(Vec2(tmpPos.x, tmpPos.y - speed));
-		}
-	}
 
 	auto rightpos		= Vec2((tmpPos.x + size.x / 2) / 48, tmpPos.y / 48);
 	auto uprightpos		= Vec2((tmpPos.x + size.x / 2) / 48, mapSize.height - (tmpPos.y + size.y / 2) / 48);
@@ -315,15 +320,9 @@ void Player::CheckGID(void)
 	if ((col->getTileGIDAt(downleftpos)  != 0 && col->getTileGIDAt(legpos) != 0)
 	 || (col->getTileGIDAt(downrightpos) != 0 && col->getTileGIDAt(legpos) != 0))
 	{
-		TRACE("leg.x:%f,leg.y:%f\n", legpos.x, legpos.y);
 		this->setPosition(Vec2(tmpPos.x, tmpPos.y + (tmpPos.y - ((mapSize.height - legpos.y) + 1) * 48)));
-		//gravity = false;
+		gravity = false;
 	}
-	//else
-	//{
-	//	gravity = true;
-	//	TRACE("NO HIT");
-	//}
 
 	auto headpos = Vec2(tmpPos.x / 48, (mapSize.height - (tmpPos.y + size.y / 2) / 48));
 

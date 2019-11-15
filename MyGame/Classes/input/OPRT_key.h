@@ -5,7 +5,7 @@ struct OPRT_key :
 	public OPRT_state
 {
 	void Init(Node* sp)override;				// 入力判定処理ﾒｿｯﾄﾞの初期登録
-	void UpdateOldInput(void)override;			// 入力情報の更新処理
+	void Update(void)override;					// 入力情報の更新処理
 	const OPRT_TYPE GetType(void)override;		// 入力装置のﾀｲﾌﾟを取得
 };
 

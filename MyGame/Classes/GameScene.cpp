@@ -165,13 +165,13 @@ bool GameScene::layerSetUp(void)
 	groundLayer->setName("groundLayer");
 
 	// map
-	stageMap = TMXTiledMap::create("maps/thirdmap.tmx");
-	auto frontBlock = stageMap->getLayer("front_objects");
-	frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	//auto isGround = stageMap->getLayer("isground");
-	//isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	auto wall = stageMap->getLayer("walls");
-	wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
+	stageMap = TMXTiledMap::create("maps/fourthmap.tmx");
+	//auto frontBlock = stageMap->getLayer("front_objects");
+	//frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+	////auto isGround = stageMap->getLayer("isground");
+	////isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+	//auto wall = stageMap->getLayer("walls");
+	//wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
 	stageMap->setAnchorPoint(Vec2::ZERO);
 	stageMap->setPosition(Vec2::ZERO);
 	stageMap->setName("mapData");
@@ -222,17 +222,6 @@ bool GameScene::layerSetUp(void)
 	this->addChild(middleLayer, static_cast<int>(LAYER::MIDDLE));
 	this->addChild(groundLayer, static_cast<int>(LAYER::GROUND));
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
-
-	//@@@test code
-		//using FunctionPointer = bool(*)(cocos2d::Sprite&);
-		//FunctionPointer funcPt = [](Sprite& sp)
-		//{
-		//	auto pl = ((Player&)sp).createPlayer();
-		//	auto pos = ((Player&)sp).getPosition();
-		//	return true;
-		//};
-		//auto test = funcPt(*player);
-		//std::map<FunctionPointer, FunctionPointer> maps;
-
+	
 	return true;
 }

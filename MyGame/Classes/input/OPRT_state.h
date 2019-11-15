@@ -13,33 +13,43 @@ enum class OPRT_TYPE
 	MAX
 };
 
+enum class TIMING
+{
+	ON,			// 押している間
+	ON_MOM,		// 押した瞬間
+	OFF,		// 離している間
+	OFF_MOM		// 離した瞬間
+};
+
 enum class TRG
 {
 	NOW,	// 現在の入力情報
 	OLD,	// 1ﾌﾚｰﾑ前の入力情報
+	INPUT,	// 入力された生の入力情報
 	MAX
 };
 
+#define nowTrg static_cast<int>(TRG::NOW)
+#define oldTrg static_cast<int>(TRG::OLD)
+#define inputTrg static_cast<int>(TRG::INPUT)
+
 class OPRT_state;
 
-using NowOld = std::pair<bool, bool>;
-using InputAry = std::array<NowOld, static_cast<int>(DIR::MAX)>;
+using TrgAry = std::array<bool, static_cast<int>(TRG::MAX)>;
+using InputAry = std::array<TrgAry, static_cast<int>(DIR::MAX)>;
 using uniqueOPRT = std::unique_ptr<OPRT_state>;
 
 struct OPRT_state
 {
 	OPRT_state(void)
 	{
-		pressFlags = {
-			NowOld{false,false},
-			NowOld{false,false},
-			NowOld{false,false},
-			NowOld{false,false},
-			NowOld{false,false}
-		};
+		for (auto dir : DIR())
+		{
+			pressFlags[static_cast<int>(dir)] = { false, false, false };
+		}
 	};
 	virtual void Init(Node* sp) = 0;			// 入力判定処理ﾒｿｯﾄﾞの初期登録
-	virtual void UpdateOldInput(void) = 0;		// 入力情報の更新処理
+	virtual void Update(void) = 0;				// 入力情報の更新処理
 	virtual const OPRT_TYPE GetType(void) = 0;	// 入力装置のﾀｲﾌﾟを取得
 	const InputAry & GetInputAry(void)			// 現在の入力情報を取得
 	{

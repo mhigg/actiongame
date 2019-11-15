@@ -52,7 +52,7 @@ void OPRT_touch::Init(Node* sp)
 			dir = DIR::CENTER;
 		}
 
-		pressFlags[static_cast<int>(dir)].first = true;
+		pressFlags[static_cast<int>(dir)][nowTrg] = true;
 
 		return true;
 	};
@@ -62,7 +62,7 @@ void OPRT_touch::Init(Node* sp)
 
 		for (int dir = 0; dir < static_cast<int>(DIR::MAX); dir++)
 		{
-			pressFlags[static_cast<int>(dir)].first = false;
+			pressFlags[static_cast<int>(dir)][nowTrg] = false;
 		}
 
 		return true;
@@ -71,7 +71,7 @@ void OPRT_touch::Init(Node* sp)
 	sp->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, sp);
 }
 
-void OPRT_touch::UpdateOldInput(void)
+void OPRT_touch::Update(void)
 {
 }
 

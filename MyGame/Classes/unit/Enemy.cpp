@@ -42,5 +42,5 @@ Enemy::~Enemy()
 
 void Enemy::update(float delta)
 {
-	input->UpdateOldInput();
+	input->Update();
 }

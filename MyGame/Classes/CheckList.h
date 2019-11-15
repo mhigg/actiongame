@@ -1,0 +1,12 @@
+#pragma once
+#include <cocos2d.h>
+#include <action/ActionCtrl.h>
+
+struct ActData;
+
+// ÌÞ×¯¸Ø½Ä‚ÆÎÜ²ÄØ½Ä‚ðŽg‚Á‚½”»’f
+struct CheckList
+{
+	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
+};
+

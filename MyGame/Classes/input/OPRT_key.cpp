@@ -13,57 +13,53 @@ void OPRT_key::Init(Node* sp)
 	{
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::RIGHT)].first  = true;
-			pressFlags[static_cast<int>(DIR::RIGHT)].second = false;
+			pressFlags[static_cast<int>(DIR::RIGHT)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::LEFT)].first  = true;
-			pressFlags[static_cast<int>(DIR::LEFT)].second = false;
+			pressFlags[static_cast<int>(DIR::LEFT)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::UP)].first  = true;
-			pressFlags[static_cast<int>(DIR::UP)].second = false;
+			pressFlags[static_cast<int>(DIR::UP)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::DOWN)].first  = true;
-			pressFlags[static_cast<int>(DIR::DOWN)].second = false;
+			pressFlags[static_cast<int>(DIR::DOWN)][inputTrg] = true;
 		}
 	};
 	listener->onKeyReleased = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 	{
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::RIGHT)].first  = false;
-			pressFlags[static_cast<int>(DIR::RIGHT)].second = true;
+			pressFlags[static_cast<int>(DIR::RIGHT)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::LEFT)].first  = false;
-			pressFlags[static_cast<int>(DIR::LEFT)].second = true;
+			pressFlags[static_cast<int>(DIR::LEFT)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::UP)].first  = false;
-			pressFlags[static_cast<int>(DIR::UP)].second = true;
+			pressFlags[static_cast<int>(DIR::UP)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::DOWN)].first  = false;
-			pressFlags[static_cast<int>(DIR::DOWN)].second = true;
+			pressFlags[static_cast<int>(DIR::DOWN)][inputTrg] = false;
 		}
 	};
 
 	sp->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, sp);
 }
 
-void OPRT_key::UpdateOldInput(void)
+void OPRT_key::Update(void)
 {
 	for (auto dir : DIR())
 	{
-		pressFlags[static_cast<int>(dir)].second = pressFlags[static_cast<int>(dir)].first;
+		pressFlags[static_cast<int>(dir)][oldTrg] = pressFlags[static_cast<int>(dir)][nowTrg];
+	}
+	for (auto dir : DIR())
+	{
+		pressFlags[static_cast<int>(dir)][nowTrg] = pressFlags[static_cast<int>(dir)][inputTrg];
 	}
 }
 

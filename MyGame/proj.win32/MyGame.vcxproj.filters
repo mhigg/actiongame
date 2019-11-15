@@ -19,6 +19,9 @@
     <Filter Include="input">
       <UniqueIdentifier>{975ef3a2-4136-4306-9fe6-f045c3273f0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="action">
+      <UniqueIdentifier>{412cd4b9-44f3-4ad9-b63d-dd95b5e8e1ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,7 +52,19 @@
     <ClCompile Include="..\Classes\input\OPRT_touch.cpp">
       <Filter>input</Filter>
     </ClCompile>
-    <ClCompile Include="SetDir.cpp" />
+    <ClCompile Include="..\Classes\CheckList.cpp" />
+    <ClCompile Include="..\Classes\action\ActionCtrl.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\action\jumpUp.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\action\moveLR.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\action\SetDir.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -83,7 +98,19 @@
     <ClInclude Include="..\Classes\input\OPRT_touch.h">
       <Filter>input</Filter>
     </ClInclude>
-    <ClInclude Include="SetDir.h" />
+    <ClInclude Include="..\Classes\CheckList.h" />
+    <ClInclude Include="..\Classes\action\ActionCtrl.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\action\jumpUp.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\action\moveLR.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\action\SetDir.h">
+      <Filter>action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

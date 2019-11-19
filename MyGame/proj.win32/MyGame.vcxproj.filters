@@ -57,22 +57,26 @@
     <ClCompile Include="..\Classes\action\ActionCtrl.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\action\jumpUp.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\action\moveLR.cpp">
       <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\action\SetDir.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CheckCollided.cpp">
+    <ClCompile Include="..\Classes\input\OPRT_state.cpp" />
+    <ClCompile Include="..\Classes\action\Jump.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\action\Fall.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\check\CheckCollided.cpp">
       <Filter>check</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CheckList.cpp">
+    <ClCompile Include="..\Classes\check\CheckKey.cpp">
       <Filter>check</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CheckKey.cpp">
+    <ClCompile Include="..\Classes\check\CheckList.cpp">
       <Filter>check</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,22 +114,25 @@
     <ClInclude Include="..\Classes\action\ActionCtrl.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\action\jumpUp.h">
-      <Filter>action</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\action\moveLR.h">
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\action\SetDir.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\CheckCollided.h">
+    <ClInclude Include="..\Classes\action\Jump.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\action\Fall.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\check\CheckCollided.h">
       <Filter>check</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\CheckList.h">
+    <ClInclude Include="..\Classes\check\CheckKey.h">
       <Filter>check</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\CheckKey.h">
+    <ClInclude Include="..\Classes\check\CheckList.h">
       <Filter>check</Filter>
     </ClInclude>
   </ItemGroup>

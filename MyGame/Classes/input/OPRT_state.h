@@ -39,20 +39,11 @@ using uniqueOPRT = std::unique_ptr<OPRT_state>;
 
 struct OPRT_state
 {
-	OPRT_state(void)
-	{
-		for (auto dir : DIR())
-		{
-			pressFlags[static_cast<int>(dir)] = { false, false, false };
-		}
-	};
+	OPRT_state(void);
 	virtual void Init(cocos2d::Node* sp) = 0;	// 入力判定処理ﾒｿｯﾄﾞの初期登録
-	virtual void Update(void) = 0;				// 入力情報の更新処理
+	virtual void Update(void);					// 入力情報の更新処理
+	const InputAry& GetInputAry(void);			// 現在の入力情報を取得
 	virtual const OPRT_TYPE GetType(void) = 0;	// 入力装置のﾀｲﾌﾟを取得
-	const InputAry & GetInputAry(void)			// 現在の入力情報を取得
-	{
-		return pressFlags;
-	}
 
 protected:
 	InputAry pressFlags;	// 現在の入力ﾌﾗｸﾞを格納

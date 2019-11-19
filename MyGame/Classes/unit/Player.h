@@ -14,34 +14,23 @@ public:
 	Player();
 	~Player();
 
-	void update(float delta);
-
+	void update(float delta);			// 更新処理
+	
 	const State nowState(void) const;	// 現在のｱｸｼｮﾝ状態を取得する
 	void nowState(const State state);	// 現在のｱｸｼｮﾝ状態をｾｯﾄする
 	const DIR dir(void) const;			// 向きを取得する
 	void dir(const DIR direction);		// 向きをｾｯﾄする
+	const uniqueOPRT& inputState(void);	// 入力情報を取得する
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(Player);
 
 private:
-	void (Player::*updater)(void);
+	void InitAction(void);	// ｱｸｼｮﾝの初期登録
 
-	void InitAction(void);
-
-	void UpdateIdle(void);	// 停止状態
-	void UpdateMove(void);	// 移動状態
-	void UpdateJump(void);	// ｼﾞｬﾝﾌﾟ状態
-
+	std::string _nowAction;	// ｱｸｼｮﾝ状態名
 	State _nowState;		// 現在のｱｸｼｮﾝ状態
 	DIR _dir;				// 向き
-	bool gravity;			// true:重力あり false:重力なし
-	bool jumpFlag;			// true:ｼﾞｬﾝﾌﾟ中 false:非ｼﾞｬﾝﾌﾟ
-	cocos2d::Action* jumpAct = nullptr;
-	std::vector<bool> collision;
-
-	float speed;			// 移動速度
-	std::array<cocos2d::Vec2, static_cast<int>(DIR::MAX)> moveSpeed;
 
 	uniqueOPRT _inputState;	// 入力情報取得変数
 	ActionCtrl* _actCtrl;	// ｱｸｼｮﾝ制御用ｸﾗｽ変数

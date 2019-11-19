@@ -3,7 +3,6 @@
 #include <array>
 #include <cocos2d.h>
 #include "DIR.h"
-#include <input/OPRT_state.h>
 
 struct ActData;
 enum class TIMING;
@@ -12,9 +11,12 @@ using ActFuncPtr = std::function<bool(cocos2d::Sprite&, ActData&)>;
 
 enum class State
 {
-	idle,	// ’â~ó‘Ô
-	move,	// ˆÚ“®ó‘Ô
-	jump,	// ¼Ş¬İÌßó‘Ô
+	move,		// ˆÚ“®ó‘Ô
+	jump,		// ¼Ş¬İÌßó‘Ô
+	jumping,	// ¼Ş¬İÌß’†
+	fall,		// —‰ºó‘Ô
+	falling,	// —‰º’†
+	idle,		// ’â~ó‘Ô
 	max
 };
 
@@ -38,13 +40,12 @@ public:
 	~ActionCtrl();
 
 	bool AddAction(const std::string actName, ActData& actData);
-//	void SetAction(const );
+	void SetAction(const std::string actName);	// keycode, flipflag
 	void Update(cocos2d::Sprite& sprite);
 
 private:
-	std::list<std::string> _stateNameList;	// ±¸¼®İó‘Ô–¼‚ğŠi”[‚·‚éØ½Ä
+	std::string _nowAction;					// Œ»İ‚Ì±¸¼®İ–¼
 	std::vector<ActFuncPtr> _actFuncList;	// State‚É‰‚¶‚½±¸¼®İŠÖ”Îß²İÀ‚ğŠi”[‚·‚éØ½Ä
 	std::map<std::string, ActData> _actMap;	// ±¸¼®İÃŞ°À‚ğŠi”[‚·‚é˜A‘z”z—ñ
-	uniqueOPRT _inputState;					// “ü—Íî•ñæ“¾•Ï”
 };
 

@@ -190,7 +190,7 @@ bool GameScene::layerSetUp(void)
 	{
 		// load successed
 		// position the sprite on the center of the screen
-		player->setPosition(Vec2(640,240));
+		player->setPosition(Vec2(640,100));
 	}
 
 	cocos2d::Sprite* crab = Enemy::createEnemy();

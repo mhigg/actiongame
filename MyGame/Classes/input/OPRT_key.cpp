@@ -50,18 +50,6 @@ void OPRT_key::Init(cocos2d::Node* sp)
 	sp->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, sp);
 }
 
-void OPRT_key::Update(void)
-{
-	for (auto dir : DIR())
-	{
-		pressFlags[static_cast<int>(dir)][oldTrg] = pressFlags[static_cast<int>(dir)][nowTrg];
-	}
-	for (auto dir : DIR())
-	{
-		pressFlags[static_cast<int>(dir)][nowTrg] = pressFlags[static_cast<int>(dir)][inputTrg];
-	}
-}
-
 const OPRT_TYPE OPRT_key::GetType(void)
 {
 	return OPRT_TYPE::KEY;

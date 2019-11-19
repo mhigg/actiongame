@@ -150,18 +150,20 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\action\ActionCtrl.cpp" />
-    <ClCompile Include="..\Classes\action\jumpUp.cpp" />
+    <ClCompile Include="..\Classes\action\Fall.cpp" />
+    <ClCompile Include="..\Classes\action\Jump.cpp" />
     <ClCompile Include="..\Classes\action\moveLR.cpp" />
     <ClCompile Include="..\Classes\action\SetDir.cpp" />
     <ClCompile Include="..\Classes\AnimationMng.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\CheckCollided.cpp" />
-    <ClCompile Include="..\Classes\CheckKey.cpp" />
-    <ClCompile Include="..\Classes\CheckList.cpp" />
+    <ClCompile Include="..\Classes\check\CheckCollided.cpp" />
+    <ClCompile Include="..\Classes\check\CheckKey.cpp" />
+    <ClCompile Include="..\Classes\check\CheckList.cpp" />
     <ClCompile Include="..\Classes\CreateAnim.cpp" />
     <ClCompile Include="..\Classes\DIR.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_key.cpp" />
+    <ClCompile Include="..\Classes\input\OPRT_state.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_touch.cpp" />
     <ClCompile Include="..\Classes\unit\Enemy.cpp" />
     <ClCompile Include="..\Classes\unit\Player.cpp" />
@@ -170,14 +172,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\action\ActionCtrl.h" />
-    <ClInclude Include="..\Classes\action\jumpUp.h" />
+    <ClInclude Include="..\Classes\action\Fall.h" />
+    <ClInclude Include="..\Classes\action\Jump.h" />
     <ClInclude Include="..\Classes\action\moveLR.h" />
     <ClInclude Include="..\Classes\action\SetDir.h" />
     <ClInclude Include="..\Classes\AnimationMng.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\CheckCollided.h" />
-    <ClInclude Include="..\Classes\CheckKey.h" />
-    <ClInclude Include="..\Classes\CheckList.h" />
+    <ClInclude Include="..\Classes\check\CheckCollided.h" />
+    <ClInclude Include="..\Classes\check\CheckKey.h" />
+    <ClInclude Include="..\Classes\check\CheckList.h" />
     <ClInclude Include="..\Classes\CreateAnim.h" />
     <ClInclude Include="..\Classes\DIR.h" />
     <ClInclude Include="..\Classes\GameScene.h" />

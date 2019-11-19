@@ -10,6 +10,8 @@
 #include "CreateAnim.h"
 #include <_DebugConOut.h>
 
+USING_NS_CC;
+
 Player* Player::createPlayer()
 {
 	return Player::create();
@@ -42,6 +44,9 @@ Player::Player() : _actCtrl(new ActionCtrl())
 	CreateAnim()("player", "player", "run", 10);
 	CreateAnim()("player", "player", "jump", 6);
 
+	InitAction();
+	_inputState->Init(this);
+
 	auto cache = AnimationCache::getInstance()->getAnimation("player-idle");
 
 	// set first action
@@ -51,9 +56,7 @@ Player::Player() : _actCtrl(new ActionCtrl())
 
 	updater = &Player::UpdateIdle;
 
-	InitAction();
-
-	_inputState->Init(this);
+	_nowState = State::idle;
 
 	this->scheduleUpdate();
 }
@@ -69,14 +72,13 @@ void Player::update(float delta)
 	auto pos = this->getPosition();
 	Vec2 size = { 50,120 };
 
-	_actCtrl->Update();
+	_actCtrl->Update(*this);
 
 	if (_inputState->GetInputAry()[0][nowTrg] & ~_inputState->GetInputAry()[0][oldTrg])
 	{
+		_nowState = State::move;
 		auto flip = FlipX::create(true);
 		this->runAction(flip);
-		// Ø½ÄÁª¯¸‚ð‹²‚ñ‚ÅrunAction
-		//moveLR()(*this);
 	}
 	
 	//if (pos.x - size.x / 2 < 0 || 1024 < pos.x + size.x / 2
@@ -101,16 +103,66 @@ const State Player::nowState(void) const
 	return _nowState;
 }
 
+void Player::nowState(const State state)
+{
+	_nowState = state;
+}
+
+void Player::dir(const DIR direction)
+{
+	_dir = direction;
+}
+
+const DIR Player::dir(void) const
+{
+	return _dir;
+}
+
 
 void Player::InitAction(void)
 {
-	ActData actData;
-	actData.state = State::move;
-	actData.whiteList.emplace_back(State::move);
-	actData.whiteList.emplace_back(State::jump);
-	actData.timing = TIMING::ON;
+	// ¶ˆÚ“®‚Ì“o˜^
+	{
+		ActData actData;
+		actData.state = State::move;
+		actData.whiteList.emplace_back(State::move);
+		actData.whiteList.emplace_back(State::jump);
+		actData.dir = DIR::LEFT;
+		actData.col[0] = Vec2{ -30, 50 };
+		actData.col[1] = Vec2{ -30,-50 };
+		actData.distance = Point(-2.0f, 0.0f);
+		actData.timing = TIMING::ON;
 
-	_actCtrl->AddAction("‘–‚é", actData);
+		_actCtrl->AddAction("¶ˆÚ“®", actData);
+	}
+	// ‰EˆÚ“®‚Ì“o˜^
+	{
+		ActData actData;
+		actData.state = State::move;
+		actData.whiteList.emplace_back(State::move);
+		actData.whiteList.emplace_back(State::jump);
+		actData.dir = DIR::RIGHT;
+		actData.col[0] = Vec2{ 30, 50 };
+		actData.col[1] = Vec2{ 30,-50 };
+		actData.distance = Point(+2.0f, 0.0f);
+		actData.timing = TIMING::ON;
+
+		_actCtrl->AddAction("‰EˆÚ“®", actData);
+	}
+	// ¼Þ¬ÝÌß“o˜^
+	{
+		ActData actData;
+		actData.state = State::jump;
+		actData.whiteList.emplace_back(State::move);
+		actData.blackList.emplace_back(State::jump);
+		actData.dir = DIR::UP;
+		actData.col[0] = Vec2{  30, 50 };
+		actData.col[1] = Vec2{ -30, 50 };
+		actData.distance = Point(0.0f, 2.0f);
+		actData.timing = TIMING::ON_MOM;
+
+		_actCtrl->AddAction("ƒWƒƒƒ“ƒv", actData);
+	}
 }
 
 // ’âŽ~ó‘Ô‚Å‚Ìˆ—
@@ -255,56 +307,5 @@ void Player::UpdateJump(void)
 		this->runAction(idle);
 		CC_SAFE_RELEASE(jumpAct);
 
-	}
-}
-
-void Player::CheckGID(void)
-{
-	// get mapChipData
-	auto director = Director::getInstance();
-	auto map = (TMXTiledMap*)director->getRunningScene()->getChildByName("groundLayer")->getChildByName("mapData");
-	auto col = map->getLayer("ground");
-	auto mapSize = map->getMapSize();
-
-	auto tmpPos = this->getPosition();
-	auto size = Vec2{ 50,120 };
-
-	auto rightpos		= Vec2((tmpPos.x + size.x / 2) / 48, tmpPos.y / 48);
-	auto uprightpos		= Vec2((tmpPos.x + size.x / 2) / 48, mapSize.height - (tmpPos.y + size.y / 2) / 48);
-	auto downrightpos	= Vec2((tmpPos.x + size.x / 2) / 48, mapSize.height - (tmpPos.y - size.y / 2) / 48);
-
-	if (col->getTileGIDAt(rightpos)		 != 0
-	 || col->getTileGIDAt(uprightpos)	 != 0
-	 || col->getTileGIDAt(downrightpos)	 != 0)
-	{
-		this->setPosition(Vec2(tmpPos.x - speed, tmpPos.y));
-	}
-
-	auto leftpos		= Vec2((tmpPos.x - size.x / 2) / 48, tmpPos.y / 48);
-	auto upleftpos		= Vec2((tmpPos.x - size.x / 2) / 48, mapSize.height - (tmpPos.y + size.y / 2) / 48);
-	auto downleftpos	= Vec2((tmpPos.x - size.x / 2) / 48, mapSize.height - (tmpPos.y - size.y / 2) / 48);
-
-	if (col->getTileGIDAt(leftpos)		!= 0
-	 || col->getTileGIDAt(upleftpos)	!= 0
-	 || col->getTileGIDAt(downleftpos)	!= 0)
-	{
-		this->setPosition(Vec2(tmpPos.x + speed, tmpPos.y));
-	}
-
-	auto legpos = Vec2(tmpPos.x / 48, (mapSize.height - (tmpPos.y - size.y / 2) / 48));
-
-	if ((col->getTileGIDAt(downleftpos)  != 0 && col->getTileGIDAt(legpos) != 0)
-	 || (col->getTileGIDAt(downrightpos) != 0 && col->getTileGIDAt(legpos) != 0))
-	{
-		this->setPosition(Vec2(tmpPos.x, tmpPos.y + (tmpPos.y - ((mapSize.height - legpos.y) + 1) * 48)));
-		gravity = false;
-	}
-
-	auto headpos = Vec2(tmpPos.x / 48, (mapSize.height - (tmpPos.y + size.y / 2) / 48));
-
-	if (col->getTileGIDAt(headpos) != 0)
-	{
-		jumpFlag = false;
-		this->setPosition(Vec2(tmpPos.x, tmpPos.y - speed));
 	}
 }

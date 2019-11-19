@@ -1,7 +1,6 @@
 #include "OPRT_touch.h"
 
-
-void OPRT_touch::Init(Node* sp)
+void OPRT_touch::Init(cocos2d::Node* sp)
 {
 	// tap on device
 	auto listener = cocos2d::EventListenerTouchOneByOne::create();
@@ -10,7 +9,7 @@ void OPRT_touch::Init(Node* sp)
 	{
 		// set first tap position
 		auto loc = touch->getLocation();
-		start = Point(loc.x, loc.y);
+		start = cocos2d::Point(loc.x, loc.y);
 
 		return true;
 	};
@@ -19,40 +18,37 @@ void OPRT_touch::Init(Node* sp)
 		// calculate dir and set flag true
 
 		int margin = 10;
-		auto loc = touch->getLocation();
-		DIR dir = DIR::CENTER, dirX = DIR::CENTER, dirY = DIR::CENTER;
+		auto distance = touch->getLocation() - start;
+		DIR dirX = DIR::CENTER, dirY = DIR::CENTER;
 
-		if (loc.x - start.x > margin)
+		if (distance.x > margin)
 		{
 			dirX = DIR::RIGHT;
 		}
-		else if (loc.x - start.x < -margin)
+		else if (distance.x < -margin)
 		{
 			dirX = DIR::LEFT;
 		}
-		if (loc.y - start.y > margin)
+
+		if (distance.y > margin)
 		{
 			dirY = DIR::UP;
 		}
-		else if (loc.y - start.y < -margin)
+		else if (distance.y < -margin)
 		{
 			dirY = DIR::DOWN;
 		}
 
-		if (abs(loc.x - start.x) > abs(loc.y - start.y))
+		if (abs(distance.x) > abs(distance.y))
 		{
-			dir = dirX;
-		}
-		else if (abs(loc.x - start.x) < abs(loc.y - start.y))
-		{
-			dir = dirY;
+			pressFlags[static_cast<int>(dirX)][inputTrg] = true;
+			pressFlags[static_cast<int>(dirY)][inputTrg] = false;
 		}
 		else
 		{
-			dir = DIR::CENTER;
+			pressFlags[static_cast<int>(dirY)][inputTrg] = true;
+			pressFlags[static_cast<int>(dirX)][inputTrg] = false;
 		}
-
-		pressFlags[static_cast<int>(dir)][nowTrg] = true;
 
 		return true;
 	};
@@ -62,7 +58,7 @@ void OPRT_touch::Init(Node* sp)
 
 		for (int dir = 0; dir < static_cast<int>(DIR::MAX); dir++)
 		{
-			pressFlags[static_cast<int>(dir)][nowTrg] = false;
+			pressFlags[static_cast<int>(dir)][inputTrg] = false;
 		}
 
 		return true;
@@ -73,6 +69,14 @@ void OPRT_touch::Init(Node* sp)
 
 void OPRT_touch::Update(void)
 {
+	for (auto dir : DIR())
+	{
+		pressFlags[static_cast<int>(dir)][oldTrg] = pressFlags[static_cast<int>(dir)][nowTrg];
+	}
+	for (auto dir : DIR())
+	{
+		pressFlags[static_cast<int>(dir)][nowTrg] = pressFlags[static_cast<int>(dir)][inputTrg];
+	}
 }
 
 const OPRT_TYPE OPRT_touch::GetType(void)

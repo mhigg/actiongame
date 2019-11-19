@@ -1,10 +1,8 @@
 #pragma once
 #include <array>
-#include "cocos2d.h"
+#include <cocos2d.h>
 #include "2d/CCNode.h"
 #include "DIR.h"
-
-USING_NS_CC;
 
 enum class OPRT_TYPE
 {
@@ -33,7 +31,7 @@ enum class TRG
 #define oldTrg static_cast<int>(TRG::OLD)
 #define inputTrg static_cast<int>(TRG::INPUT)
 
-class OPRT_state;
+struct OPRT_state;
 
 using TrgAry = std::array<bool, static_cast<int>(TRG::MAX)>;
 using InputAry = std::array<TrgAry, static_cast<int>(DIR::MAX)>;
@@ -48,7 +46,7 @@ struct OPRT_state
 			pressFlags[static_cast<int>(dir)] = { false, false, false };
 		}
 	};
-	virtual void Init(Node* sp) = 0;			// “ü—Í”»’èˆ—Ò¿¯ÄŞ‚Ì‰Šú“o˜^
+	virtual void Init(cocos2d::Node* sp) = 0;	// “ü—Í”»’èˆ—Ò¿¯ÄŞ‚Ì‰Šú“o˜^
 	virtual void Update(void) = 0;				// “ü—Íî•ñ‚ÌXVˆ—
 	virtual const OPRT_TYPE GetType(void) = 0;	// “ü—Í‘•’u‚ÌÀ²Ìß‚ğæ“¾
 	const InputAry & GetInputAry(void)			// Œ»İ‚Ì“ü—Íî•ñ‚ğæ“¾

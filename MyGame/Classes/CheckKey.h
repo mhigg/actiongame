@@ -3,8 +3,7 @@
 
 struct ActData;
 
-// ÌŞ×¯¸Ø½Ä‚ÆÎÜ²ÄØ½Ä‚ğg‚Á‚½”»’f
-struct CheckList
+struct CheckKey
 {
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };

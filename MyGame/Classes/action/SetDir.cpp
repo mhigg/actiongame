@@ -1,6 +1,8 @@
 #include "SetDir.h"
-#include "unit/Player.h"
+#include <unit/Player.h>
 
-void SetDir::operator()(cocos2d::Sprite & sprite)
+bool SetDir::operator()(cocos2d::Sprite& sprite, ActData& actData)
 {
+	((Player&)sprite).dir(actData.dir);
+	return true;
 }

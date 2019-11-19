@@ -8,6 +8,8 @@
 #include "CreateAnim.h"
 #include <_DebugConOut.h>
 
+USING_NS_CC;
+
 Enemy* Enemy::createEnemy()
 {
 	return Enemy::create();

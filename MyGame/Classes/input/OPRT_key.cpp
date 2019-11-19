@@ -1,9 +1,8 @@
 #include "OPRT_key.h"
 
-
 // “ü—Í”»’èˆ—Ò¿¯ÄŞ‚Ì‰Šú“o˜^
 // sp c Ò¿¯ÄŞ‚ğ“o˜^‚·‚é½Ìß×²Ä
-void OPRT_key::Init(Node* sp)
+void OPRT_key::Init(cocos2d::Node* sp)
 {
 	// pushing keys
 

@@ -63,6 +63,7 @@ list(APPEND GAME_SOURCE
      Classes/DIR.cpp
      Classes/CheckCollided.cpp
      Classes/CheckList.cpp
+     Classes/CheckKey.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -81,6 +82,7 @@ list(APPEND GAME_HEADER
      Classes/DIR.h
      Classes/CheckCollided.h
      Classes/CheckList.h
+     Classes/CheckKey.h
      )
 
 if(ANDROID)

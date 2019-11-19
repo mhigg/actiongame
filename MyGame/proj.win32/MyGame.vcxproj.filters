@@ -22,6 +22,9 @@
     <Filter Include="action">
       <UniqueIdentifier>{412cd4b9-44f3-4ad9-b63d-dd95b5e8e1ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="check">
+      <UniqueIdentifier>{d3e18261-5cfd-4a5a-85b8-235d75dc93e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,7 +41,6 @@
       <Filter>_debug</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\DIR.cpp" />
-    <ClCompile Include="..\Classes\CheckCollided.cpp" />
     <ClCompile Include="..\Classes\CreateAnim.cpp" />
     <ClCompile Include="..\Classes\unit\Enemy.cpp">
       <Filter>unit</Filter>
@@ -52,7 +54,6 @@
     <ClCompile Include="..\Classes\input\OPRT_touch.cpp">
       <Filter>input</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\CheckList.cpp" />
     <ClCompile Include="..\Classes\action\ActionCtrl.cpp">
       <Filter>action</Filter>
     </ClCompile>
@@ -64,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\action\SetDir.cpp">
       <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckCollided.cpp">
+      <Filter>check</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckList.cpp">
+      <Filter>check</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CheckKey.cpp">
+      <Filter>check</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +91,6 @@
       <Filter>_debug</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DIR.h" />
-    <ClInclude Include="..\Classes\CheckCollided.h" />
     <ClInclude Include="..\Classes\CreateAnim.h" />
     <ClInclude Include="..\Classes\unit\Enemy.h">
       <Filter>unit</Filter>
@@ -98,7 +107,6 @@
     <ClInclude Include="..\Classes\input\OPRT_touch.h">
       <Filter>input</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\CheckList.h" />
     <ClInclude Include="..\Classes\action\ActionCtrl.h">
       <Filter>action</Filter>
     </ClInclude>
@@ -110,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\action\SetDir.h">
       <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckCollided.h">
+      <Filter>check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckList.h">
+      <Filter>check</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CheckKey.h">
+      <Filter>check</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

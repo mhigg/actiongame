@@ -1,10 +1,12 @@
 #pragma once
 #include <functional>
+#include <array>
 #include <cocos2d.h>
 #include "DIR.h"
 #include <input/OPRT_state.h>
 
 struct ActData;
+enum class TIMING;
 
 using ActFuncPtr = std::function<bool(cocos2d::Sprite&, ActData&)>;
 
@@ -24,8 +26,9 @@ struct ActData
 	std::list<State> blackList;			// ÌŞ×¯¸Ø½Ä(‘JˆÚ•s‰Â”\‚Èó‘ÔØ½Ä)
 	std::list<State> whiteList;			// ÎÜ²ÄØ½Ä(‘JˆÚ‰Â”\‚Èó‘ÔØ½Ä)
 	cocos2d::Point distance;			// ±¸¼®İ‚ÌˆÚ“®—Ê
+	std::array<cocos2d::Vec2, 2> col;	// ’†S‚©‚ç“–‚½‚è”»’è‚ÌÀ•W‚Ü‚Å‚Ì’·‚³(Œü‚«‚É‚æ‚Á‚Äã‰º2‚©Š)
 	DIR dir;							// Œü‚«
-	TIMING timing;						// 
+	TIMING timing;						// “ü—Í‚Ìó‘Ô
 };
 
 class ActionCtrl
@@ -35,13 +38,13 @@ public:
 	~ActionCtrl();
 
 	bool AddAction(const std::string actName, ActData& actData);
-	void Update(void);
+//	void SetAction(const );
+	void Update(cocos2d::Sprite& sprite);
 
 private:
-	bool CheckHitObj(cocos2d::Sprite& sprite, ActData& actData);	// ‘«ê‚â•Ç‚Æ‚¢‚Á‚½Ï¯Ìß‚Æ‚Ì“–‚½‚è”»’è
-
 	std::list<std::string> _stateNameList;	// ±¸¼®İó‘Ô–¼‚ğŠi”[‚·‚éØ½Ä
-	std::map<std::string, ActData> actMap;	// ±¸¼®İÃŞ°À‚ğŠi”[‚·‚é˜A‘z”z—ñ
-
+	std::vector<ActFuncPtr> _actFuncList;	// State‚É‰‚¶‚½±¸¼®İŠÖ”Îß²İÀ‚ğŠi”[‚·‚éØ½Ä
+	std::map<std::string, ActData> _actMap;	// ±¸¼®İÃŞ°À‚ğŠi”[‚·‚é˜A‘z”z—ñ
+	uniqueOPRT _inputState;					// “ü—Íî•ñæ“¾•Ï”
 };
 

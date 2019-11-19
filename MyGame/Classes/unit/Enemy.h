@@ -1,9 +1,9 @@
 #pragma once
-#include "cocos2d.h"
-#include "input/OPRT_state.h"
+#include <cocos2d.h>
+#include <input/OPRT_state.h>
 
 class Enemy :
-	public Sprite
+	public cocos2d::Sprite
 {
 public:
 	static Enemy* createEnemy();

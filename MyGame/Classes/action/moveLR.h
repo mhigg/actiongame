@@ -9,3 +9,7 @@ struct moveLR
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 
+struct idleNow
+{
+	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
+};

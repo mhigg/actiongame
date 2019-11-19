@@ -156,6 +156,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\AnimationMng.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\CheckCollided.cpp" />
+    <ClCompile Include="..\Classes\CheckKey.cpp" />
     <ClCompile Include="..\Classes\CheckList.cpp" />
     <ClCompile Include="..\Classes\CreateAnim.cpp" />
     <ClCompile Include="..\Classes\DIR.cpp" />
@@ -175,6 +176,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AnimationMng.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\CheckCollided.h" />
+    <ClInclude Include="..\Classes\CheckKey.h" />
     <ClInclude Include="..\Classes\CheckList.h" />
     <ClInclude Include="..\Classes\CreateAnim.h" />
     <ClInclude Include="..\Classes\DIR.h" />

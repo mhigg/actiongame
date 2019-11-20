@@ -18,9 +18,9 @@ Enemy* Enemy::createEnemy()
 Enemy::Enemy()
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	input = std::make_unique<OPRT_key>();
+	_inputState = std::make_unique<OPRT_key>();
 #else
-	input.reset(new OPRT_touch());
+	_inputState.reset(new OPRT_touch());
 #endif
 
 	CreateAnim()("enemies", "crab", "idle", 4);
@@ -32,7 +32,7 @@ Enemy::Enemy()
 
 	this->runAction(idle);
 
-	input->Init(this);
+	_inputState->Init(this);
 
 	this->scheduleUpdate();
 }
@@ -44,5 +44,5 @@ Enemy::~Enemy()
 
 void Enemy::update(float delta)
 {
-	input->Update();
+	_inputState->Update();
 }

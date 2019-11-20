@@ -18,6 +18,6 @@ public:
 
 private:
 
-	uniqueOPRT input;		// “ü—Íî•ñæ“¾•Ï”
+	uniqueOPRT _inputState;		// “ü—Íî•ñæ“¾•Ï”
 };
 

@@ -3,12 +3,12 @@
 
 struct ActData;
 
-struct fallDown
+struct FallDown
 {
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 
-struct falling
+struct Falling
 {
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };

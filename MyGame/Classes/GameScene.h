@@ -26,8 +26,8 @@
 #define __GAME_SCENE_H__
 
 #include <cocos2d.h>
-#include <input/OPRT_state.h>
 #include <memory>
+#include <input/OPRT_state.h>
 
 enum class LAYER
 {
@@ -56,10 +56,7 @@ public:
 	CREATE_FUNC(GameScene);
 
 private:
-	bool layerSetUp(void);
-
-	uniqueOPRT input;
-	cocos2d::TMXTiledMap* stageMap;
+	bool LayerSetUp(void);	// Ï¯ÌßÚ²Ô°‚Ì¾¯Ä±¯Ìß
 };
 
 #endif // __GAME_SCENE_H__

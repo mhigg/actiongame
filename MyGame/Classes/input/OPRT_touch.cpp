@@ -9,45 +9,45 @@ void OPRT_touch::Init(cocos2d::Node* sp)
 	{
 		// set first tap position
 		auto loc = touch->getLocation();
-		start = cocos2d::Point(loc.x, loc.y);
+		_startPoint = cocos2d::Point(loc.x, loc.y);
 
 		return true;
 	};
 	listener->onTouchMoved = [this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
-		// calculate dir and set flag true
+		// calculate inputID and set flag true
 
 		int margin = 10;
-		auto distance = touch->getLocation() - start;
-		DIR dirX = DIR::CENTER, dirY = DIR::CENTER;
+		auto distance = touch->getLocation() - _startPoint;
+		INPUT_ID inputX = INPUT_ID::NON, inputY = INPUT_ID::NON;
 
 		if (distance.x > margin)
 		{
-			dirX = DIR::RIGHT;
+			inputX = INPUT_ID::RIGHT;
 		}
 		else if (distance.x < -margin)
 		{
-			dirX = DIR::LEFT;
+			inputX = INPUT_ID::LEFT;
 		}
 
 		if (distance.y > margin)
 		{
-			dirY = DIR::UP;
+			inputY = INPUT_ID::UP;
 		}
 		else if (distance.y < -margin)
 		{
-			dirY = DIR::DOWN;
+			inputY = INPUT_ID::DOWN;
 		}
 
 		if (abs(distance.x) > abs(distance.y))
 		{
-			pressFlags[static_cast<int>(dirX)][inputTrg] = true;
-			pressFlags[static_cast<int>(dirY)][inputTrg] = false;
+			_pressFlags[static_cast<int>(inputX)][inputTrg] = true;
+			_pressFlags[static_cast<int>(inputY)][inputTrg] = false;
 		}
 		else
 		{
-			pressFlags[static_cast<int>(dirY)][inputTrg] = true;
-			pressFlags[static_cast<int>(dirX)][inputTrg] = false;
+			_pressFlags[static_cast<int>(inputY)][inputTrg] = true;
+			_pressFlags[static_cast<int>(inputX)][inputTrg] = false;
 		}
 
 		return true;
@@ -56,9 +56,9 @@ void OPRT_touch::Init(cocos2d::Node* sp)
 	{
 		// set flag false
 
-		for (int dir = 0; dir < static_cast<int>(DIR::MAX); dir++)
+		for (int inputID = 0; inputID < static_cast<int>(INPUT_ID::MAX); inputID++)
 		{
-			pressFlags[static_cast<int>(dir)][inputTrg] = false;
+			_pressFlags[static_cast<int>(inputID)][inputTrg] = false;
 		}
 
 		return true;

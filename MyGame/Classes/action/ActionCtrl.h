@@ -3,49 +3,56 @@
 #include <array>
 #include <cocos2d.h>
 #include "DIR.h"
+#include "INPUT_ID.h"
+#include "TIMING.h"
 
 struct ActData;
-enum class TIMING;
 
+// ｱｸｼｮﾝの関数ﾎﾟｲﾝﾀ型
 using ActFuncPtr = std::function<bool(cocos2d::Sprite&, ActData&)>;
 
-enum class State
+enum class STATE
 {
-	move,		// 移動状態
-	jump,		// ｼﾞｬﾝﾌﾟ状態
-	jumping,	// ｼﾞｬﾝﾌﾟ中
-	fall,		// 落下状態
-	falling,	// 落下中
-	idle,		// 停止状態
-	max
+	MOVE,		// 移動状態
+	JUMP,		// ｼﾞｬﾝﾌﾟ状態
+	JUMPING,	// ｼﾞｬﾝﾌﾟ中
+	FALL,		// 落下状態
+	FALLING,	// 落下中
+	IDLE,		// 停止状態
+	MAX
 };
 
 struct ActData
 {
-	State state;						// ｱｸｼｮﾝの状態名
+	STATE state;						// ｱｸｼｮﾝの状態名
 	ActFuncPtr runAction;				// 実行するｱｸｼｮﾝの関数ﾎﾟｲﾝﾀ
 	std::list<ActFuncPtr> act;			// 実行前にﾁｪｯｸする関数ﾎﾟｲﾝﾀﾘｽﾄ
-	std::list<State> blackList;			// ﾌﾞﾗｯｸﾘｽﾄ(遷移不可能な状態ﾘｽﾄ)
-	std::list<State> whiteList;			// ﾎﾜｲﾄﾘｽﾄ(遷移可能な状態ﾘｽﾄ)
+	std::list<STATE> blackList;			// ﾌﾞﾗｯｸﾘｽﾄ(遷移不可能な状態ﾘｽﾄ)
+	std::list<STATE> whiteList;			// ﾎﾜｲﾄﾘｽﾄ(遷移可能な状態ﾘｽﾄ)
 	cocos2d::Point distance;			// ｱｸｼｮﾝ時の移動量
 	std::array<cocos2d::Vec2, 2> col;	// 中心から当たり判定の座標までの長さ(向きによって上下2か所)
 	DIR dir;							// 向き
+	INPUT_ID keyCode;					// 対応ｷｰ
 	TIMING timing;						// 入力の状態
 };
 
+using ActVec = std::vector<ActFuncPtr>;
+using ActMap = std::map<std::string, ActData>;
+
 class ActionCtrl
+	: public cocos2d::Ref
 {
 public:
 	ActionCtrl();
 	~ActionCtrl();
 
+	// ｱｸｼｮﾝに必要なﾃﾞｰﾀをｱｸｼｮﾝ名ごとに登録する
 	bool AddAction(const std::string actName, ActData& actData);
-	void SetAction(const std::string actName);	// keycode, flipflag
+	// ｱｸｼｮﾝの更新処理
 	void Update(cocos2d::Sprite& sprite);
 
 private:
-	std::string _nowAction;					// 現在のｱｸｼｮﾝ名
-	std::vector<ActFuncPtr> _actFuncList;	// Stateに応じたｱｸｼｮﾝ関数ﾎﾟｲﾝﾀを格納するﾘｽﾄ
-	std::map<std::string, ActData> _actMap;	// ｱｸｼｮﾝﾃﾞｰﾀを格納する連想配列
+	std::string _nowActName;	// 現在のｱｸｼｮﾝ名
+	ActVec _actFuncList;		// Stateに応じたｱｸｼｮﾝ関数ﾎﾟｲﾝﾀを格納するﾘｽﾄ
+	ActMap _actMap;				// ｱｸｼｮﾝﾃﾞｰﾀを格納する連想配列
 };
-

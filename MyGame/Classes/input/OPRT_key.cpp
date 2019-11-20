@@ -12,38 +12,38 @@ void OPRT_key::Init(cocos2d::Node* sp)
 	{
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::RIGHT)][inputTrg] = true;
+			_pressFlags[static_cast<int>(INPUT_ID::RIGHT)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::LEFT)][inputTrg] = true;
+			_pressFlags[static_cast<int>(INPUT_ID::LEFT)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::UP)][inputTrg] = true;
+			_pressFlags[static_cast<int>(INPUT_ID::UP)][inputTrg] = true;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::DOWN)][inputTrg] = true;
+			_pressFlags[static_cast<int>(INPUT_ID::DOWN)][inputTrg] = true;
 		}
 	};
 	listener->onKeyReleased = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 	{
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::RIGHT)][inputTrg] = false;
+			_pressFlags[static_cast<int>(INPUT_ID::RIGHT)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::LEFT)][inputTrg] = false;
+			_pressFlags[static_cast<int>(INPUT_ID::LEFT)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::UP)][inputTrg] = false;
+			_pressFlags[static_cast<int>(INPUT_ID::UP)][inputTrg] = false;
 		}
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
-			pressFlags[static_cast<int>(DIR::DOWN)][inputTrg] = false;
+			_pressFlags[static_cast<int>(INPUT_ID::DOWN)][inputTrg] = false;
 		}
 	};
 

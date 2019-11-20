@@ -63,7 +63,6 @@
     <ClCompile Include="..\Classes\action\SetDir.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\input\OPRT_state.cpp" />
     <ClCompile Include="..\Classes\action\Jump.cpp">
       <Filter>action</Filter>
     </ClCompile>
@@ -79,6 +78,10 @@
     <ClCompile Include="..\Classes\check\CheckList.cpp">
       <Filter>check</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\input\OPRT_state.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\INPUT_ID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -135,6 +138,10 @@
     <ClInclude Include="..\Classes\check\CheckList.h">
       <Filter>check</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ActionInclude.h" />
+    <ClInclude Include="..\Classes\INPUT_ID.h" />
+    <ClInclude Include="..\Classes\TIMING.h" />
+    <ClInclude Include="..\Classes\CheckInclude.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -3,18 +3,16 @@
 #include "moveLR.h"
 #include "Jump.h"
 #include "SetDir.h"
-#include <check/CheckKey.h>
-#include <check/CheckList.h>
-#include <check/CheckCollided.h>
+#include "CheckInclude.h"
 
 ActionCtrl::ActionCtrl()
 {
-	_actFuncList.emplace_back(moveLR());
-	_actFuncList.emplace_back(jumpUp());
+	_actFuncList.emplace_back(MoveLR());
+	_actFuncList.emplace_back(JumpUp());
 	//_actFuncList.emplace_back(jumpNow());
-	//_actFuncList.emplace_back(fallDown());
+	//_actFuncList.emplace_back(FallDown());
 	//_actFuncList.emplace_back(fallNow());
-	//_actFuncList.emplace_back(idleNow());
+	//_actFuncList.emplace_back(Idling());
 }
 
 ActionCtrl::~ActionCtrl()
@@ -36,27 +34,32 @@ bool ActionCtrl::AddAction(const std::string actName, ActData& actData)
 	return false;
 }
 
-void ActionCtrl::SetAction(const std::string actName)
-{
-	_nowAction = actName;
-}
-
 void ActionCtrl::Update(cocos2d::Sprite& sprite)
 {
-	SetDir()(sprite, _actMap[_nowAction]);
-
-	if (_nowAction == "ë“ã@")
+	if (_nowActName == "ë“ã@")
 	{
 		return;
 	}
 
-	// Ç±Ç±Ç≈¡™Ø∏ÇÇ∑ÇÈ
-	/**/
-	for (auto check : _actMap[_nowAction].act)
-	{
-		if (check(sprite, _actMap[_nowAction]))
+	// ¡™Ø∏ä÷êî
+	auto checkAct = [&sprite](ActData data) {
+		for (auto check : data.act)
 		{
-			_actMap[_nowAction].runAction(sprite, _actMap[_nowAction]);
+			if (!check(sprite, data))
+			{
+				return false;
+			}
+			return true;
+		}
+	};
+
+	for (auto data : _actMap)
+	{
+		if (checkAct(data.second))
+		{
+			data.second.runAction(sprite, data.second);
+			((Player&)sprite).nowState(data.second.state);
+			SetDir()(sprite, data.second);
 		}
 	}
 }

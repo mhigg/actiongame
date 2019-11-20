@@ -52,18 +52,21 @@ list(APPEND GAME_SOURCE
      Classes/GameScene.cpp
      Classes/input/OPRT_key.cpp
      Classes/input/OPRT_touch.cpp
+     Classes/input/OPRT_state.cpp
      Classes/unit/Player.cpp
      Classes/unit/Enemy.cpp
      Classes/AnimationMng.cpp
      Classes/CreateAnim.cpp
      Classes/action/ActionCtrl.cpp
      Classes/action/moveLR.cpp
-     Classes/action/jumpUp.cpp
+     Classes/action/Jump.cpp
+     Classes/action/Fall.cpp
      Classes/action/SetDir.cpp
      Classes/DIR.cpp
-     Classes/CheckCollided.cpp
-     Classes/CheckList.cpp
-     Classes/CheckKey.cpp
+     Classes/INPUT_ID.cpp
+     Classes/check/CheckCollided.cpp
+     Classes/check/CheckList.cpp
+     Classes/check/CheckKey.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -77,12 +80,15 @@ list(APPEND GAME_HEADER
      Classes/CreateAnim.h
      Classes/action/ActionCtrl.h
      Classes/action/moveLR.h
-     Classes/action/jumpUp.h
+     Classes/action/Jump.h
+     Classes/action/Fall.h
      Classes/action/SetDir.h
      Classes/DIR.h
-     Classes/CheckCollided.h
-     Classes/CheckList.h
-     Classes/CheckKey.h
+     Classes/INPUT_ID.h
+     Classes/TIMING.h
+     Classes/check/CheckCollided.h
+     Classes/check/CheckList.h
+     Classes/check/CheckKey.h
      )
 
 if(ANDROID)

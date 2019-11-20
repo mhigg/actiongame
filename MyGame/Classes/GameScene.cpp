@@ -26,8 +26,6 @@
 #include "SimpleAudioEngine.h"
 #include <unit/Player.h>
 #include <unit/Enemy.h>
-#include <input/OPRT_key.h>
-#include <input/OPRT_touch.h>
 
 USING_NS_CC;
 
@@ -105,13 +103,7 @@ bool GameScene::init()
 		this->addChild(label, 1);
 	}
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	input = std::make_unique<OPRT_key>();
-#else
-	input.reset(new OPRT_touch());	// android studio
-#endif
-
-	layerSetUp();
+	LayerSetUp();
 
 	this->scheduleUpdate();
     return true;
@@ -134,7 +126,7 @@ void GameScene::update(float delta)
 {
 }
 
-bool GameScene::layerSetUp(void)
+bool GameScene::LayerSetUp(void)
 {
 	// backImageLayer
 	auto backLayer = Layer::create();
@@ -165,7 +157,7 @@ bool GameScene::layerSetUp(void)
 	groundLayer->setName("groundLayer");
 
 	// map
-	stageMap = TMXTiledMap::create("maps/fourthmap.tmx");
+	auto stageMap = TMXTiledMap::create("maps/fourthmap.tmx");
 	//auto frontBlock = stageMap->getLayer("front_objects");
 	//frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
 	////auto isGround = stageMap->getLayer("isground");
@@ -193,19 +185,6 @@ bool GameScene::layerSetUp(void)
 		player->setPosition(Vec2(640,100));
 	}
 
-	cocos2d::Sprite* crab = Enemy::createEnemy();
-	if (crab == nullptr)
-	{
-		// load failed
-		problemLoading("'crab-idle-1.png'");
-	}
-	else
-	{
-		// load successed
-		// position the sprite on the center of the screen
-		crab->setPosition(Vec2(200, 240));
-	}
-
 	// add sprites on each layers;
 
 	backLayer->addChild(backImgBefor);
@@ -214,7 +193,6 @@ bool GameScene::layerSetUp(void)
 	middleLayer->addChild(middleImgAfter);
 	groundLayer->addChild(stageMap);
 	mainLayer->addChild(player);
-//	mainLayer->addChild(crab);
 
 	// add Layers on GameScene
 

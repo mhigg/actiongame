@@ -1,15 +1,16 @@
 #pragma once
 #include <cocos2d.h>
-#include "ActionCtrl.h"
 
 struct ActData;
 
-struct moveLR
+struct MoveLR
 {
+	// ¶‰EˆÚ“®
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 
-struct idleNow
+struct Idling
 {
+	// ‘Ò‹@ó‘Ô
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };

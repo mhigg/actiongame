@@ -8,6 +8,6 @@ struct OPRT_touch :
 	const OPRT_TYPE GetType(void)override;		// “ü—Í‘•’u‚ÌÀ²Ìß‚ðŽæ“¾
 
 private:
-	cocos2d::Point start;
+	cocos2d::Point _startPoint;
 };
 

@@ -165,12 +165,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\input\OPRT_key.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_state.cpp" />
     <ClCompile Include="..\Classes\input\OPRT_touch.cpp" />
+    <ClCompile Include="..\Classes\INPUT_ID.cpp" />
     <ClCompile Include="..\Classes\unit\Enemy.cpp" />
     <ClCompile Include="..\Classes\unit\Player.cpp" />
     <ClCompile Include="..\Classes\_DebugConOut.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\ActionInclude.h" />
     <ClInclude Include="..\Classes\action\ActionCtrl.h" />
     <ClInclude Include="..\Classes\action\Fall.h" />
     <ClInclude Include="..\Classes\action\Jump.h" />
@@ -178,6 +180,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\action\SetDir.h" />
     <ClInclude Include="..\Classes\AnimationMng.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\CheckInclude.h" />
     <ClInclude Include="..\Classes\check\CheckCollided.h" />
     <ClInclude Include="..\Classes\check\CheckKey.h" />
     <ClInclude Include="..\Classes\check\CheckList.h" />
@@ -187,6 +190,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\input\OPRT_key.h" />
     <ClInclude Include="..\Classes\input\OPRT_state.h" />
     <ClInclude Include="..\Classes\input\OPRT_touch.h" />
+    <ClInclude Include="..\Classes\INPUT_ID.h" />
+    <ClInclude Include="..\Classes\TIMING.h" />
     <ClInclude Include="..\Classes\unit\Enemy.h" />
     <ClInclude Include="..\Classes\unit\Player.h" />
     <ClInclude Include="..\Classes\_DebugConOut.h" />

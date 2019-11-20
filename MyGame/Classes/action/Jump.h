@@ -4,12 +4,12 @@
 
 struct ActData;
 
-struct jumpUp
+struct JumpUp
 {
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 
-struct jumping
+struct Jumping
 {
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };

@@ -17,7 +17,7 @@ Player* Player::createPlayer()
 	return Player::create();
 }
 
-Player::Player() : _actCtrl(new ActionCtrl())
+Player::Player()
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	_inputState = std::make_unique<OPRT_key>();
@@ -33,53 +33,39 @@ Player::Player() : _actCtrl(new ActionCtrl())
 	CreateAnim()("player", "player", "jump", 6);
 
 	InitAction();
+	//_actCtrl->SetAction("‘Ò‹@");
+	_nowState = STATE::IDLE;
 	_inputState->Init(this);
 
 	auto cache = AnimationCache::getInstance()->getAnimation("player-idle");
 
 	// set first action
-	FiniteTimeAction* idle = RepeatForever::create(Animate::create(cache));
+	auto idle = RepeatForever::create(Animate::create(cache));
 
 	this->runAction(idle);
 
 	_dir = DIR::CENTER;
-	_actCtrl->SetAction("‘Ò‹@");
-	_nowState = State::idle;
 
 	this->scheduleUpdate();
 }
 
 Player::~Player()
 {
+	//delete _actCtrl;
 }
 
 void Player::update(float delta)
 {
 	_inputState->Update();
 	_actCtrl->Update(*this);
-
-	if (_inputState->GetInputAry()[0][nowTrg] & ~_inputState->GetInputAry()[0][oldTrg])
-	{
-		_actCtrl->SetAction("¶ˆÚ“®");
-		_nowState = State::move;
-		auto flip = FlipX::create(true);
-		this->runAction(flip);
-	}
-	if (_inputState->GetInputAry()[1][nowTrg] & ~_inputState->GetInputAry()[1][oldTrg])
-	{
-		_actCtrl->SetAction("‰EˆÚ“®");
-		_nowState = State::move;
-		auto flip = FlipX::create(false);
-		this->runAction(flip);
-	}
 }
 
-const State Player::nowState(void) const
+const STATE Player::nowState(void) const
 {
 	return _nowState;
 }
 
-void Player::nowState(const State state)
+void Player::nowState(const STATE state)
 {
 	_nowState = state;
 }
@@ -101,44 +87,48 @@ const DIR Player::dir(void) const
 
 void Player::InitAction(void)
 {
-	// ¶ˆÚ“®‚Ì“o˜^
-	{
+	_actCtrl = new ActionCtrl();
+	
+	{	/* ¶ˆÚ“®‚Ì“o˜^ */
 		ActData actData;
-		actData.state = State::move;
-		actData.whiteList.emplace_back(State::move);
-		actData.whiteList.emplace_back(State::jump);
+		actData.state = STATE::MOVE;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.dir = DIR::LEFT;
 		actData.col[0] = Vec2{ -30, 50 };
 		actData.col[1] = Vec2{ -30,-50 };
 		actData.distance = Point(-2.0f, 0.0f);
+		actData.keyCode = INPUT_ID::LEFT;
 		actData.timing = TIMING::ON;
 
 		_actCtrl->AddAction("¶ˆÚ“®", actData);
 	}
-	// ‰EˆÚ“®‚Ì“o˜^
-	{
+
+	{	/* ‰EˆÚ“®‚Ì“o˜^ */
 		ActData actData;
-		actData.state = State::move;
-		actData.whiteList.emplace_back(State::move);
-		actData.whiteList.emplace_back(State::jump);
+		actData.state = STATE::MOVE;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.dir = DIR::RIGHT;
 		actData.col[0] = Vec2{ 30, 50 };
 		actData.col[1] = Vec2{ 30,-50 };
 		actData.distance = Point(2.0f, 0.0f);
+		actData.keyCode = INPUT_ID::RIGHT;
 		actData.timing = TIMING::ON;
 
 		_actCtrl->AddAction("‰EˆÚ“®", actData);
 	}
-	// ¼Þ¬ÝÌß“o˜^
-	{
+	
+	{	/* ¼Þ¬ÝÌß“o˜^ */
 		ActData actData;
-		actData.state = State::jump;
-		actData.whiteList.emplace_back(State::move);
-		actData.blackList.emplace_back(State::jump);
+		actData.state = STATE::JUMP;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.blackList.emplace_back(STATE::JUMP);
 		actData.dir = DIR::UP;
 		actData.col[0] = Vec2{  30, 50 };
 		actData.col[1] = Vec2{ -30, 50 };
 		actData.distance = Point(0.0f, 2.0f);
+		actData.keyCode = INPUT_ID::UP;
 		actData.timing = TIMING::ON_MOM;
 
 		_actCtrl->AddAction("ƒWƒƒƒ“ƒv", actData);

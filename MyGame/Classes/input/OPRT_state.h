@@ -1,22 +1,13 @@
 #pragma once
 #include <array>
 #include <cocos2d.h>
-#include "2d/CCNode.h"
-#include "DIR.h"
+#include "INPUT_ID.h"
 
 enum class OPRT_TYPE
 {
 	KEY,	// ·°ÎŞ°ÄŞ“ü—Í
 	TOUCH,	// À¯ÁÊßÈÙ“ü—Í
 	MAX
-};
-
-enum class TIMING
-{
-	ON,			// ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
-	ON_MOM,		// ‰Ÿ‚µ‚½uŠÔ
-	OFF,		// —£‚µ‚Ä‚¢‚éŠÔ
-	OFF_MOM		// —£‚µ‚½uŠÔ
 };
 
 enum class TRG
@@ -34,10 +25,11 @@ enum class TRG
 struct OPRT_state;
 
 using TrgAry = std::array<bool, static_cast<int>(TRG::MAX)>;
-using InputAry = std::array<TrgAry, static_cast<int>(DIR::MAX)>;
+using InputAry = std::array<TrgAry, static_cast<int>(INPUT_ID::MAX)>;
 using uniqueOPRT = std::unique_ptr<OPRT_state>;
 
 struct OPRT_state
+	: public cocos2d::Ref
 {
 	OPRT_state(void);
 	virtual void Init(cocos2d::Node* sp) = 0;	// “ü—Í”»’èˆ—Ò¿¯ÄŞ‚Ì‰Šú“o˜^
@@ -46,5 +38,5 @@ struct OPRT_state
 	virtual const OPRT_TYPE GetType(void) = 0;	// “ü—Í‘•’u‚ÌÀ²Ìß‚ğæ“¾
 
 protected:
-	InputAry pressFlags;	// Œ»İ‚Ì“ü—ÍÌ×¸Ş‚ğŠi”[
+	InputAry _pressFlags;	// Œ»İ‚Ì“ü—ÍÌ×¸Ş‚ğŠi”[
 };

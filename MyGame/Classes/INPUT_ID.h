@@ -1,15 +1,15 @@
 #pragma once
 enum class INPUT_ID
 {
-	NON,
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	BTN_1,
-	BTN_2,
-	BTN_3,
-	BTN_4,
+	NON,	// 壗傕墴偟偰偄側偄忬懺
+	LEFT,	// 嵍
+	RIGHT,	// 塃
+	UP,		// 忋
+	DOWN,	// 壓
+	BTN_1,	// 无垒1
+	BTN_2,	// 无垒2
+	BTN_3,	// 无垒3
+	BTN_4,	// 无垒4
 	MAX
 };
 

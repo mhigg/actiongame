@@ -33,4 +33,3 @@ private:
 	uniqueOPRT _inputState;		// “ü—Íî•ñæ“¾•Ï”
 	ActionCtrl* _actCtrl;		// ±¸¼®İ§Œä—p¸×½•Ï”
 };
-

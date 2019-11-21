@@ -30,9 +30,9 @@ struct ActData
 	std::list<STATE> blackList;			// ﾌﾞﾗｯｸﾘｽﾄ(遷移不可能な状態ﾘｽﾄ)
 	std::list<STATE> whiteList;			// ﾎﾜｲﾄﾘｽﾄ(遷移可能な状態ﾘｽﾄ)
 	cocos2d::Point distance;			// ｱｸｼｮﾝ時の移動量
-	std::array<cocos2d::Vec2, 2> col;	// 中心から当たり判定の座標までの長さ(向きによって上下2か所)
+	std::array<cocos2d::Vec2, 2> col;	// 中心から当たり判定の座標までの長さ(上/右,下/左)
 	DIR dir;							// 向き
-	INPUT_ID keyCode;					// 対応ｷｰ
+	INPUT_ID inputID;					// 対応ｷｰ
 	TIMING timing;						// 入力の状態
 };
 

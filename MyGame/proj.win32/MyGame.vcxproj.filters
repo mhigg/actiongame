@@ -37,9 +37,6 @@
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\_DebugConOut.cpp">
-      <Filter>_debug</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\DIR.cpp" />
     <ClCompile Include="..\Classes\CreateAnim.cpp" />
     <ClCompile Include="..\Classes\unit\Enemy.cpp">
@@ -82,6 +79,9 @@
       <Filter>input</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\INPUT_ID.cpp" />
+    <ClCompile Include="_DebugConOut.cpp">
+      <Filter>_debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -93,9 +93,6 @@
     <ClInclude Include="..\Classes\AnimationMng.h" />
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\_DebugConOut.h">
-      <Filter>_debug</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DIR.h" />
     <ClInclude Include="..\Classes\CreateAnim.h" />
@@ -142,6 +139,9 @@
     <ClInclude Include="..\Classes\INPUT_ID.h" />
     <ClInclude Include="..\Classes\TIMING.h" />
     <ClInclude Include="..\Classes\CheckInclude.h" />
+    <ClInclude Include="_DebugConOut.h">
+      <Filter>_debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

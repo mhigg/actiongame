@@ -7,10 +7,12 @@ bool SetDir::operator()(cocos2d::Sprite& sprite, ActData& actData)
 	if (actData.dir == DIR::LEFT)
 	{
 		((Player&)sprite).runAction(cocos2d::FlipX::create(true));
+		return true;
 	}
 	if (actData.dir == DIR::RIGHT)
 	{
 		((Player&)sprite).runAction(cocos2d::FlipX::create(false));
+		return true;
 	}
-	return true;
+	return false;
 }

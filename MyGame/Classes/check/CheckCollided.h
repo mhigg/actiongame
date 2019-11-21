@@ -9,15 +9,15 @@ struct CheckHitObj
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 
-struct CheckIsGround
-{
-	void operator()(cocos2d::Vec2 position, cocos2d::Vec2 gravity);
-};
-
 struct CheckOverArea
 {
 	// ½Ìß×²Ä‚Ì”ÍˆÍÁª¯¸
-	void operator()(cocos2d::Sprite* sprite);
+	bool operator()(cocos2d::Vec2 position, cocos2d::Vec2 areaLimit);
+};
+
+struct CheckIsGround
+{
+	void operator()(cocos2d::Vec2 position, cocos2d::Vec2 gravity);
 };
 
 struct CheckHitSprites

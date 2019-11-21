@@ -24,7 +24,7 @@ Player::Player()
 #else
 	_inputState.reset(new OPRT_touch());
 #endif
-	// player status initialize
+	_inputState->Init(this);
 
 	// creating animation
 
@@ -33,15 +33,11 @@ Player::Player()
 	CreateAnim()("player", "player", "jump", 6);
 
 	InitAction();
-	//_actCtrl->SetAction("‘Ò‹@");
 	_nowState = STATE::IDLE;
-	_inputState->Init(this);
 
 	auto cache = AnimationCache::getInstance()->getAnimation("player-idle");
-
 	// set first action
 	auto idle = RepeatForever::create(Animate::create(cache));
-
 	this->runAction(idle);
 
 	_dir = DIR::CENTER;
@@ -70,6 +66,11 @@ void Player::nowState(const STATE state)
 	_nowState = state;
 }
 
+const DIR Player::dir(void) const
+{
+	return _dir;
+}
+
 void Player::dir(const DIR direction)
 {
 	_dir = direction;
@@ -78,11 +79,6 @@ void Player::dir(const DIR direction)
 const uniqueOPRT& Player::inputState(void)
 {
 	return _inputState;
-}
-
-const DIR Player::dir(void) const
-{
-	return _dir;
 }
 
 void Player::InitAction(void)
@@ -94,11 +90,12 @@ void Player::InitAction(void)
 		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::MOVE);
 		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.whiteList.emplace_back(STATE::FALL);
 		actData.dir = DIR::LEFT;
-		actData.col[0] = Vec2{ -30, 50 };
-		actData.col[1] = Vec2{ -30,-50 };
-		actData.distance = Point(-2.0f, 0.0f);
-		actData.keyCode = INPUT_ID::LEFT;
+		actData.col[0] = Vec2{ -20, 50 };
+		actData.col[1] = Vec2{ -20,-50 };
+		actData.distance = Point(-4.0f, 0.0f);
+		actData.inputID = INPUT_ID::LEFT;
 		actData.timing = TIMING::ON;
 
 		_actCtrl->AddAction("¶ˆÚ“®", actData);
@@ -109,28 +106,77 @@ void Player::InitAction(void)
 		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::MOVE);
 		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.whiteList.emplace_back(STATE::FALL);
 		actData.dir = DIR::RIGHT;
-		actData.col[0] = Vec2{ 30, 50 };
-		actData.col[1] = Vec2{ 30,-50 };
-		actData.distance = Point(2.0f, 0.0f);
-		actData.keyCode = INPUT_ID::RIGHT;
+		actData.col[0] = Vec2{ 20, 50 };
+		actData.col[1] = Vec2{ 20,-50 };
+		actData.distance = Point(4.0f, 0.0f);
+		actData.inputID = INPUT_ID::RIGHT;
 		actData.timing = TIMING::ON;
 
 		_actCtrl->AddAction("‰EˆÚ“®", actData);
 	}
 	
-	{	/* ¼Þ¬ÝÌß“o˜^ */
+	{	/* ¼Þ¬ÝÌßŠJŽn“o˜^ */
 		ActData actData;
 		actData.state = STATE::JUMP;
 		actData.whiteList.emplace_back(STATE::MOVE);
 		actData.blackList.emplace_back(STATE::JUMP);
-		actData.dir = DIR::UP;
-		actData.col[0] = Vec2{  30, 50 };
-		actData.col[1] = Vec2{ -30, 50 };
+		actData.dir = _dir;
+		actData.col[0] = Vec2{  20, 50 };
+		actData.col[1] = Vec2{ -20, 50 };
 		actData.distance = Point(0.0f, 2.0f);
-		actData.keyCode = INPUT_ID::UP;
+		actData.inputID = INPUT_ID::UP;
 		actData.timing = TIMING::ON_MOM;
 
-		_actCtrl->AddAction("ƒWƒƒƒ“ƒv", actData);
+		_actCtrl->AddAction("ƒWƒƒƒ“ƒvŠJŽn", actData);
 	}
+
+	{	/* ¼Þ¬ÝÌß’†“o˜^ */
+		ActData actData;
+		actData.state = STATE::JUMP;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.blackList.emplace_back(STATE::JUMP);
+		actData.dir = _dir;
+		actData.col[0] = Vec2{  20, 50 };
+		actData.col[1] = Vec2{ -20, 50 };
+		actData.distance = Point(0.0f, 2.0f);
+		actData.inputID = INPUT_ID::UP;
+		actData.timing = TIMING::ON_MOM;
+
+		_actCtrl->AddAction("ƒWƒƒƒ“ƒv’†", actData);
+	}
+
+	{	/* —Ž‰ºŠJŽn“o˜^ */
+		ActData actData;
+		actData.state = STATE::FALL;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.blackList.emplace_back(STATE::JUMP);
+		actData.blackList.emplace_back(STATE::FALL);
+		actData.dir = _dir;
+		actData.col[0] = Vec2{ 20, 50 };
+		actData.col[1] = Vec2{ -20, 50 };
+		actData.distance = Point(0.0f, -2.0f);
+		actData.inputID = INPUT_ID::DOWN;
+		actData.timing = TIMING::ON_MOM;
+
+		_actCtrl->AddAction("—Ž‰ºŠJŽn", actData);
+	}
+
+	{	/* —Ž‰º’†“o˜^ */
+		ActData actData;
+		actData.state = STATE::FALLING;
+		actData.whiteList.emplace_back(STATE::MOVE);
+		actData.blackList.emplace_back(STATE::JUMP);
+		actData.blackList.emplace_back(STATE::FALL);
+		actData.dir = _dir;
+		actData.col[0] = Vec2{ 20, 50 };
+		actData.col[1] = Vec2{ -20, 50 };
+		actData.distance = Point(0.0f, -2.0f);
+		actData.inputID = INPUT_ID::DOWN;
+		actData.timing = TIMING::ON_MOM;
+
+		_actCtrl->AddAction("—Ž‰º’†", actData);
+	}
+
 }

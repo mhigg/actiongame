@@ -25,6 +25,7 @@ public:
 
 private:
 	void InitAction(void);		// ±¸¼®İ‚Ì‰Šú“o˜^
+	void InitAnimation(void);	// ±ÆÒ°¼®İ‚Ì‰Šú“o˜^
 
 	std::string _nowActName;	// ±¸¼®İó‘Ô–¼
 	STATE _nowState;			// Œ»İ‚Ì±¸¼®İó‘Ô

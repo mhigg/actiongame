@@ -38,7 +38,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\DIR.cpp" />
-    <ClCompile Include="..\Classes\CreateAnim.cpp" />
     <ClCompile Include="..\Classes\unit\Enemy.cpp">
       <Filter>unit</Filter>
     </ClCompile>
@@ -95,7 +94,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DIR.h" />
-    <ClInclude Include="..\Classes\CreateAnim.h" />
     <ClInclude Include="..\Classes\unit\Enemy.h">
       <Filter>unit</Filter>
     </ClInclude>

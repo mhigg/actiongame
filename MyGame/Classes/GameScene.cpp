@@ -140,6 +140,9 @@ bool GameScene::LayerSetUp(void)
 	backImgAfter->setAnchorPoint(Vec2::ZERO);
 	backImgAfter->setPosition(Vec2::ZERO + Vec2(720, 0));
 
+	backLayer->addChild(backImgBefor);
+	backLayer->addChild(backImgAfter);
+
 	// middleImageLayer
 	auto middleLayer = Layer::create();
 	middleLayer->setName("frontLayer");
@@ -151,6 +154,9 @@ bool GameScene::LayerSetUp(void)
 	auto middleImgAfter = Sprite::create("image/Environment/middleground.png");
 	middleImgAfter->setAnchorPoint(Vec2::ZERO);
 	middleImgAfter->setPosition(Vec2::ZERO + Vec2(816, 0));
+
+	middleLayer->addChild(middleImgBefor);
+	middleLayer->addChild(middleImgAfter);
 
 	// groundLayer
 	auto groundLayer = Layer::create();
@@ -168,6 +174,40 @@ bool GameScene::LayerSetUp(void)
 	stageMap->setPosition(Vec2::ZERO);
 	stageMap->setName("mapData");
 
+	groundLayer->addChild(stageMap);
+
+#ifdef _DEBUG
+	// debugLayer
+	auto debugLayer = Layer::create();
+	debugLayer->setName("debugLayer");
+
+	auto mapSize = stageMap->getMapSize();
+	auto tileSize = stageMap->getTileSize();
+
+	auto drawPen = DrawNode::create();
+	for (int x = 0; x < (int)mapSize.width; x++)
+	{
+		drawPen->drawSegment(
+			Vec2(x * tileSize.width, 0),
+			Vec2(x * tileSize.width, mapSize.height * tileSize.height),
+			1.0f,
+			Color4F::WHITE);
+	}
+	for (int y = 0; y < (int)mapSize.height; y++)
+	{
+		drawPen->drawSegment(
+			Vec2(0, y * tileSize.height),
+			Vec2(mapSize.width * tileSize.width, y * tileSize.height),
+			1.0f,
+			Color4F::WHITE);
+	}
+
+	debugLayer->addChild(drawPen);
+#else
+	auto debugLayer = Layer::create();
+	debugLayer->setName("debugLayer");
+#endif // _DEBUG
+
 	// mainLayer
 	auto mainLayer = Layer::create();
 	mainLayer->setName("mainLayer");
@@ -184,22 +224,15 @@ bool GameScene::LayerSetUp(void)
 		// position the sprite on the center of the screen
 		player->setPosition(Vec2(640,100));
 	}
-
-	// add sprites on each layers;
-
-	backLayer->addChild(backImgBefor);
-	backLayer->addChild(backImgAfter);
-	middleLayer->addChild(middleImgBefor);
-	middleLayer->addChild(middleImgAfter);
-	groundLayer->addChild(stageMap);
 	mainLayer->addChild(player);
 
 	// add Layers on GameScene
 
 	this->addChild(backLayer, static_cast<int>(LAYER::BACK));
 	this->addChild(middleLayer, static_cast<int>(LAYER::MIDDLE));
+	this->addChild(debugLayer, 0);	// ¦ÃÞÊÞ¯¸ÞˆÈŠO‚Å‚ÍaddChild‚·‚é•K—v‚à‚È‚¢
 	this->addChild(groundLayer, static_cast<int>(LAYER::GROUND));
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
-	
+
 	return true;
 }

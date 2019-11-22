@@ -5,8 +5,7 @@
 #include <input/OPRT_touch.h>
 #endif
 #include "DIR.h"
-#include "CreateAnim.h"
-#include <_DebugConOut.h>
+#include "AnimationMng.h"
 
 USING_NS_CC;
 
@@ -23,15 +22,9 @@ Enemy::Enemy()
 	_inputState.reset(new OPRT_touch());
 #endif
 
-	CreateAnim()("enemies", "crab", "idle", 4);
-
-	auto cache = AnimationCache::getInstance()->getAnimation("crab-idle");
-
-	// set first action
-	FiniteTimeAction* idle = RepeatForever::create(Animate::create(cache));
-
-	this->runAction(idle);
-
+	lpAnimMng.AddAnimation(AnimData{ "enemies", "crab", "idle", 4, 0.05f, true });
+	lpAnimMng.SetAnimation(*this, "crab-idle");
+	
 	_inputState->Init(this);
 
 	this->scheduleUpdate();

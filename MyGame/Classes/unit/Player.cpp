@@ -7,8 +7,7 @@
 #include <action/moveLR.h>
 #include <action/Jump.h>
 #include "DIR.h"
-#include "CreateAnim.h"
-#include <_DebugConOut.h>
+#include "AnimationMng.h"
 
 USING_NS_CC;
 
@@ -26,19 +25,11 @@ Player::Player()
 #endif
 	_inputState->Init(this);
 
-	// creating animation
-
-	CreateAnim()("player", "player", "idle", 4);
-	CreateAnim()("player", "player", "run", 10);
-	CreateAnim()("player", "player", "jump", 6);
-
 	InitAction();
 	_nowState = STATE::IDLE;
 
-	auto cache = AnimationCache::getInstance()->getAnimation("player-idle");
-	// set first action
-	auto idle = RepeatForever::create(Animate::create(cache));
-	this->runAction(idle);
+	InitAnimation();
+	lpAnimMng.SetAnimation(*this, "player-idle");
 
 	_dir = DIR::CENTER;
 
@@ -92,8 +83,8 @@ void Player::InitAction(void)
 		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.whiteList.emplace_back(STATE::FALL);
 		actData.dir = DIR::LEFT;
-		actData.col[0] = Vec2{ -20, 50 };
-		actData.col[1] = Vec2{ -20,-50 };
+		actData.col[0] = Vec2{ -30, 50 };
+		actData.col[1] = Vec2{ -30,-50 };
 		actData.distance = Point(-4.0f, 0.0f);
 		actData.inputID = INPUT_ID::LEFT;
 		actData.timing = TIMING::ON;
@@ -108,8 +99,8 @@ void Player::InitAction(void)
 		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.whiteList.emplace_back(STATE::FALL);
 		actData.dir = DIR::RIGHT;
-		actData.col[0] = Vec2{ 20, 50 };
-		actData.col[1] = Vec2{ 20,-50 };
+		actData.col[0] = Vec2{ 30, 50 };
+		actData.col[1] = Vec2{ 30,-50 };
 		actData.distance = Point(4.0f, 0.0f);
 		actData.inputID = INPUT_ID::RIGHT;
 		actData.timing = TIMING::ON;
@@ -117,66 +108,137 @@ void Player::InitAction(void)
 		_actCtrl->AddAction("‰EˆÚ“®", actData);
 	}
 	
-	{	/* ¼Þ¬ÝÌßŠJŽn“o˜^ */
+	{	/* ãˆÚ“®‚Ì“o˜^ */
 		ActData actData;
-		actData.state = STATE::JUMP;
+		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.blackList.emplace_back(STATE::JUMP);
-		actData.dir = _dir;
-		actData.col[0] = Vec2{  20, 50 };
-		actData.col[1] = Vec2{ -20, 50 };
-		actData.distance = Point(0.0f, 2.0f);
+		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.whiteList.emplace_back(STATE::FALL);
+		actData.dir = DIR::RIGHT;
+		actData.col[0] = Vec2{  20, 60 };
+		actData.col[1] = Vec2{ -20, 60 };
+		actData.distance = Point(0.0f, 4.0f);
 		actData.inputID = INPUT_ID::UP;
-		actData.timing = TIMING::ON_MOM;
+		actData.timing = TIMING::ON;
 
-		_actCtrl->AddAction("ƒWƒƒƒ“ƒvŠJŽn", actData);
+		_actCtrl->AddAction("ãˆÚ“®", actData);
 	}
 
-	{	/* ¼Þ¬ÝÌß’†“o˜^ */
+	{	/* ‰ºˆÚ“®‚Ì“o˜^ */
 		ActData actData;
-		actData.state = STATE::JUMP;
+		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.blackList.emplace_back(STATE::JUMP);
-		actData.dir = _dir;
-		actData.col[0] = Vec2{  20, 50 };
-		actData.col[1] = Vec2{ -20, 50 };
-		actData.distance = Point(0.0f, 2.0f);
-		actData.inputID = INPUT_ID::UP;
-		actData.timing = TIMING::ON_MOM;
-
-		_actCtrl->AddAction("ƒWƒƒƒ“ƒv’†", actData);
-	}
-
-	{	/* —Ž‰ºŠJŽn“o˜^ */
-		ActData actData;
-		actData.state = STATE::FALL;
-		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.blackList.emplace_back(STATE::JUMP);
-		actData.blackList.emplace_back(STATE::FALL);
-		actData.dir = _dir;
-		actData.col[0] = Vec2{ 20, 50 };
-		actData.col[1] = Vec2{ -20, 50 };
-		actData.distance = Point(0.0f, -2.0f);
+		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.whiteList.emplace_back(STATE::FALL);
+		actData.dir = DIR::RIGHT;
+		actData.col[0] = Vec2{  20, -80 };
+		actData.col[1] = Vec2{ -20, -80 };
+		actData.distance = Point(0.0f, -4.0f);
 		actData.inputID = INPUT_ID::DOWN;
-		actData.timing = TIMING::ON_MOM;
+		actData.timing = TIMING::ON;
 
-		_actCtrl->AddAction("—Ž‰ºŠJŽn", actData);
+		_actCtrl->AddAction("‰ºˆÚ“®", actData);
 	}
 
-	{	/* —Ž‰º’†“o˜^ */
-		ActData actData;
-		actData.state = STATE::FALLING;
-		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.blackList.emplace_back(STATE::JUMP);
-		actData.blackList.emplace_back(STATE::FALL);
-		actData.dir = _dir;
-		actData.col[0] = Vec2{ 20, 50 };
-		actData.col[1] = Vec2{ -20, 50 };
-		actData.distance = Point(0.0f, -2.0f);
-		actData.inputID = INPUT_ID::DOWN;
-		actData.timing = TIMING::ON_MOM;
+	//{	/* ¼Þ¬ÝÌßŠJŽn“o˜^ */
+	//	ActData actData;
+	//	actData.state = STATE::JUMP;
+	//	actData.whiteList.emplace_back(STATE::MOVE);
+	//	actData.blackList.emplace_back(STATE::JUMP);
+	//	actData.dir = _dir;
+	//	actData.col[0] = Vec2{  20, 50 };
+	//	actData.col[1] = Vec2{ -20, 50 };
+	//	actData.distance = Point(0.0f, 2.0f);
+	//	actData.inputID = INPUT_ID::UP;
+	//	actData.timing = TIMING::ON_MOM;
 
-		_actCtrl->AddAction("—Ž‰º’†", actData);
+	//	_actCtrl->AddAction("ƒWƒƒƒ“ƒvŠJŽn", actData);
+	//}
+
+	//{	/* ¼Þ¬ÝÌß’†“o˜^ */
+	//	ActData actData;
+	//	actData.state = STATE::JUMP;
+	//	actData.whiteList.emplace_back(STATE::MOVE);
+	//	actData.blackList.emplace_back(STATE::JUMP);
+	//	actData.dir = _dir;
+	//	actData.col[0] = Vec2{  20, 50 };
+	//	actData.col[1] = Vec2{ -20, 50 };
+	//	actData.distance = Point(0.0f, 2.0f);
+	//	actData.inputID = INPUT_ID::UP;
+	//	actData.timing = TIMING::ON_MOM;
+
+	//	_actCtrl->AddAction("ƒWƒƒƒ“ƒv’†", actData);
+	//}
+
+	//{	/* —Ž‰ºŠJŽn“o˜^ */
+	//	ActData actData;
+	//	actData.state = STATE::FALL;
+	//	actData.whiteList.emplace_back(STATE::MOVE);
+	//	actData.blackList.emplace_back(STATE::JUMP);
+	//	actData.blackList.emplace_back(STATE::FALL);
+	//	actData.dir = _dir;
+	//	actData.col[0] = Vec2{ 20, 50 };
+	//	actData.col[1] = Vec2{ -20, 50 };
+	//	actData.distance = Point(0.0f, -2.0f);
+	//	actData.inputID = INPUT_ID::DOWN;
+	//	actData.timing = TIMING::ON_MOM;
+
+	//	_actCtrl->AddAction("—Ž‰ºŠJŽn", actData);
+	//}
+
+	//{	/* —Ž‰º’†“o˜^ */
+	//	ActData actData;
+	//	actData.state = STATE::FALLING;
+	//	actData.whiteList.emplace_back(STATE::MOVE);
+	//	actData.blackList.emplace_back(STATE::JUMP);
+	//	actData.blackList.emplace_back(STATE::FALL);
+	//	actData.dir = _dir;
+	//	actData.col[0] = Vec2{ 20, 50 };
+	//	actData.col[1] = Vec2{ -20, 50 };
+	//	actData.distance = Point(0.0f, -2.0f);
+	//	actData.inputID = INPUT_ID::DOWN;
+	//	actData.timing = TIMING::ON_MOM;
+
+	//	_actCtrl->AddAction("—Ž‰º’†", actData);
+	//}
+
+}
+
+void Player::InitAnimation(void)
+{
+	{	/* ‘Ò‹@ */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "idle";
+		animData.frame = 4;
+		animData.delay = 0.05f;
+		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
 	}
 
+	{	/* ˆÚ“® */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "run";
+		animData.frame = 10;
+		animData.delay = 0.05f;
+		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* ƒWƒƒƒ“ƒv */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "jump";
+		animData.frame = 6;
+		animData.delay = 0.05f;
+		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
+	}
 }

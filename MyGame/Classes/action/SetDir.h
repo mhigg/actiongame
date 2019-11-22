@@ -5,7 +5,7 @@ struct ActData;
 
 struct SetDir
 {
-	// •ûŒü‚ð¾¯Ä‚·‚é
+	// •ûŒü‚ð¾¯Ä‚µ‚ÄŒü‚«‚ð•Ï‚¦‚é
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
 };
 

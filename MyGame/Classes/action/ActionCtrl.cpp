@@ -52,7 +52,8 @@ void ActionCtrl::Update(cocos2d::Sprite& sprite)
 		{
 			data.second.runAction(sprite, data.second);
 			((Player&)sprite).nowState(data.second.state);
-			SetDir()(sprite, data.second);
+			SetDir()(sprite, data.second);	// ©Œü‚«‚ÌØ‚è‘Ö‚¦‚ğ‚µ‚Ä‚à‚æ‚¢±¸¼®İ‚Ì‚Æ‚«‚Ì‚İŒÄ‚Ô‚æ‚¤‚É‚·‚é
+			// ¦¦¦±ÆÒ°¼®İØ‚è‘Ö‚¦‚±‚±‚¶‚á‚¾‚ß¦¦¦
 		}
 	}
 }

@@ -5,6 +5,7 @@
 
 ActionCtrl::ActionCtrl()
 {
+	// STATE‚É‰‚¶‚½±¸¼®İ‚ÌŠÖ”Îß²İÀ‚ğØ½Ä‚É“o˜^
 	_actFuncList.emplace_back(MoveLR());
 	_actFuncList.emplace_back(JumpUp());
 	_actFuncList.emplace_back(Jumping());

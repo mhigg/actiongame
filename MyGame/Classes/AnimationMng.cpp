@@ -1,5 +1,5 @@
 #include "AnimationMng.h"
-#include <cocos2d.h>
+//#include <cocos2d.h>
 #include <unit/Player.h>
 
 USING_NS_CC;

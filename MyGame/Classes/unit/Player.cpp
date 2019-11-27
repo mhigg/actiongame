@@ -4,8 +4,6 @@
 #else
 #include <input/OPRT_touch.h>
 #endif
-#include <action/moveLR.h>
-#include <action/Jump.h>
 #include "DIR.h"
 #include "AnimationMng.h"
 

@@ -26,6 +26,9 @@
 #include "SimpleAudioEngine.h"
 #include <unit/Player.h>
 #include <unit/Enemy.h>
+#include <ck/sound.h>
+#include <ck/bank.h>
+#include <EffectMng.h>
 
 USING_NS_CC;
 
@@ -104,6 +107,11 @@ bool GameScene::init()
 	}
 
 	LayerSetUp();
+	EffectSetUp();
+
+	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+	_sound = CkSound::newBankSound(_bank, 1);
+	_sound->play();
 
 	this->scheduleUpdate();
     return true;
@@ -118,12 +126,28 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
 }
 
 void GameScene::update(float delta)
 {
+	//auto effect = efk::Effect::create("Laser01.efk", 13.0f);
+	//if (effect != nullptr)
+	//{
+	//	auto emitter = efk::EffectEmitter::create(_effectMng);
+	//	emitter->setEffect(effect);
+	//	emitter->setPlayOnEnter(true);
+
+	//	emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+	//	emitter->setPosition(Vec2(320, 150));
+
+	//	// emitter->setScale(13);
+	//	this->addChild(emitter, 0);
+
+	//	// No need (because it uses autorelease after 1.41)
+	//	//effect->release();
+	//}
+
+	//_effectMng->update();
 }
 
 bool GameScene::LayerSetUp(void)
@@ -236,3 +260,18 @@ bool GameScene::LayerSetUp(void)
 
 	return true;
 }
+
+bool GameScene::EffectSetUp(void)
+{
+	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
+	//_effectMng = efk::EffectManager::create(Director::getInstance()->getVisibleSize());
+
+	return true;
+}
+
+//void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
+//{
+//	_effectMng->begin(renderer, _globalZOrder);
+//	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
+//	_effectMng->end(renderer, _globalZOrder);
+//}

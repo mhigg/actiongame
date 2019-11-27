@@ -1,6 +1,6 @@
 #pragma once
 #include <cocos2d.h>
-#include <memory>
+//#include <memory>
 #include <map>
 
 #define lpAnimMng AnimationMng::GetInstance()

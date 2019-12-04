@@ -56,12 +56,15 @@ list(APPEND GAME_SOURCE
      Classes/unit/Player.cpp
      Classes/unit/Enemy.cpp
      Classes/AnimationMng.cpp
-     Classes/CreateAnim.cpp
      Classes/action/ActionCtrl.cpp
      Classes/action/moveLR.cpp
      Classes/action/Jump.cpp
      Classes/action/Fall.cpp
      Classes/action/SetDir.cpp
+     Classes/EffectMng.cpp
+     Classes/Effekseer/Effekseer.cpp
+     Classes/Effekseer/EffekseerNative.cpp
+     Classes/Effekseer/EffekseerRendererNative.cpp
      Classes/DIR.cpp
      Classes/INPUT_ID.cpp
      Classes/check/CheckCollided.cpp
@@ -77,15 +80,20 @@ list(APPEND GAME_HEADER
      Classes/unit/Player.h
      Classes/unit/Enemy.h
      Classes/AnimationMng.h
-     Classes/CreateAnim.h
+     Classes/ActionInclude.h
      Classes/action/ActionCtrl.h
      Classes/action/moveLR.h
      Classes/action/Jump.h
      Classes/action/Fall.h
      Classes/action/SetDir.h
+     Classes/EffectMng.h
+     Classes/Effekseer/Effekseer.h
+     Classes/Effekseer/EffekseerNative.h
+     Classes/Effekseer/EffekseerRendererNative.h
      Classes/DIR.h
      Classes/INPUT_ID.h
      Classes/TIMING.h
+     Classes/CheckInclude.h
      Classes/check/CheckCollided.h
      Classes/check/CheckList.h
      Classes/check/CheckKey.h
@@ -184,3 +192,19 @@ if(LINUX OR WINDOWS)
     set(APP_RES_DIR "$<TARGET_FILE_DIR:${APP_NAME}>/Resources")
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
+
+set(CK_ROOT D:/Android/cricket-1.6.7)
+
+include_directories(
+        ${CK_ROOT}/inc
+        )
+
+link_directories(
+        ${CK_ROOT}/lib/android/ndk/${ANDROID_ABI}/debug
+        )
+
+target_link_libraries(
+        ${APP_NAME}
+
+
+)

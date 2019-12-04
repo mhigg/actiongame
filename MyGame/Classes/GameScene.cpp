@@ -26,9 +26,8 @@
 #include "SimpleAudioEngine.h"
 #include <unit/Player.h>
 #include <unit/Enemy.h>
-#include <ck/sound.h>
-#include <ck/bank.h>
 #include <EffectMng.h>
+#include <SoundMng.h>
 
 USING_NS_CC;
 
@@ -108,10 +107,9 @@ bool GameScene::init()
 
 	LayerSetUp();
 	EffectSetUp();
+	SoundSetUp();
 
-	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-	_sound = CkSound::newBankSound(_bank, 1);
-	_sound->play();
+	SOUND("piano")[1]->play();
 
 	this->scheduleUpdate();
     return true;
@@ -130,24 +128,7 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
-	//auto effect = efk::Effect::create("Laser01.efk", 13.0f);
-	//if (effect != nullptr)
-	//{
-	//	auto emitter = efk::EffectEmitter::create(_effectMng);
-	//	emitter->setEffect(effect);
-	//	emitter->setPlayOnEnter(true);
-
-	//	emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-	//	emitter->setPosition(Vec2(320, 150));
-
-	//	// emitter->setScale(13);
-	//	this->addChild(emitter, 0);
-
-	//	// No need (because it uses autorelease after 1.41)
-	//	//effect->release();
-	//}
-
-	//_effectMng->update();
+	_effectMng->update();
 }
 
 bool GameScene::LayerSetUp(void)
@@ -166,6 +147,7 @@ bool GameScene::LayerSetUp(void)
 
 	backLayer->addChild(backImgBefor);
 	backLayer->addChild(backImgAfter);
+	this->addChild(backLayer, static_cast<int>(LAYER::BACK));
 
 	// middleImageLayer
 	auto middleLayer = Layer::create();
@@ -181,6 +163,7 @@ bool GameScene::LayerSetUp(void)
 
 	middleLayer->addChild(middleImgBefor);
 	middleLayer->addChild(middleImgAfter);
+	this->addChild(middleLayer, static_cast<int>(LAYER::MIDDLE));
 
 	// groundLayer
 	auto groundLayer = Layer::create();
@@ -188,17 +171,27 @@ bool GameScene::LayerSetUp(void)
 
 	// map
 	auto stageMap = TMXTiledMap::create("maps/fourthmap.tmx");
-	//auto frontBlock = stageMap->getLayer("front_objects");
-	//frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	////auto isGround = stageMap->getLayer("isground");
-	////isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-	//auto wall = stageMap->getLayer("walls");
-	//wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
-	stageMap->setAnchorPoint(Vec2::ZERO);
-	stageMap->setPosition(Vec2::ZERO);
-	stageMap->setName("mapData");
+	if (stageMap == nullptr)
+	{
+		// load failed
+		problemLoading("'fourthmap.tmx'");
+	}
+	else
+	{
+		// load successed
+		//auto frontBlock = stageMap->getLayer("front_objects");
+		//frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+		////auto isGround = stageMap->getLayer("isground");
+		////isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+		//auto wall = stageMap->getLayer("walls");
+		//wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
+		stageMap->setAnchorPoint(Vec2::ZERO);
+		stageMap->setPosition(Vec2::ZERO);
+		stageMap->setName("mapData");
+	}
 
 	groundLayer->addChild(stageMap);
+	this->addChild(groundLayer, static_cast<int>(LAYER::GROUND));
 
 #ifdef _DEBUG
 	// debugLayer
@@ -227,6 +220,7 @@ bool GameScene::LayerSetUp(void)
 	}
 
 	debugLayer->addChild(drawPen);
+	this->addChild(debugLayer, 0);
 #else
 	auto debugLayer = Layer::create();
 	debugLayer->setName("debugLayer");
@@ -249,29 +243,52 @@ bool GameScene::LayerSetUp(void)
 		player->setPosition(Vec2(640,100));
 	}
 	mainLayer->addChild(player);
-
-	// add Layers on GameScene
-
-	this->addChild(backLayer, static_cast<int>(LAYER::BACK));
-	this->addChild(middleLayer, static_cast<int>(LAYER::MIDDLE));
-	this->addChild(debugLayer, 0);	// ¦ÃÞÊÞ¯¸ÞˆÈŠO‚Å‚ÍaddChild‚·‚é•K—v‚à‚È‚¢
-	this->addChild(groundLayer, static_cast<int>(LAYER::GROUND));
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
+
+	auto effectLayer = Layer::create();
+	effectLayer->setName("effectLayer");
 
 	return true;
 }
 
 bool GameScene::EffectSetUp(void)
 {
+	auto director = Director::getInstance();
 	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
-	//_effectMng = efk::EffectManager::create(Director::getInstance()->getVisibleSize());
+	_effectMng = efk::EffectManager::create(director->getVisibleSize());
+
+	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
+	if (effect != nullptr)
+	{
+		auto emitter = efk::EffectEmitter::create(_effectMng);
+		emitter->setEffect(effect);
+		emitter->setPlayOnEnter(true);
+
+		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+		emitter->setPosition(Vec2(320, 150));
+
+		// emitter->setScale(13);
+		this->addChild(emitter, 0);
+
+		// No need (because it uses autorelease after 1.41)
+		//effect->release();
+	}
+
 
 	return true;
 }
 
-//void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
-//{
-//	_effectMng->begin(renderer, _globalZOrder);
-//	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
-//	_effectMng->end(renderer, _globalZOrder);
-//}
+bool GameScene::SoundSetUp(void)
+{
+	SET_SOUND("piano", "dsptouch.ckb");
+	SOUND("piano")[1]->setLoopCount(-1);
+
+	return true;
+}
+
+void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
+{
+	_effectMng->begin(renderer, _globalZOrder);
+	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
+	_effectMng->end(renderer, _globalZOrder);
+}

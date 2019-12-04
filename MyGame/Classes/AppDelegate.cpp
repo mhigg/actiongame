@@ -24,10 +24,9 @@
 
 #include "AppDelegate.h"
 #include "GameScene.h"
-#include <ck/ck.h>
-#include <ck/config.h>
-#include <ck/bank.h>
-#include <ck/sound.h>
+#include "ck/ck.h"
+#include "ck/bank.h"
+#include "ck/sound.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -124,13 +123,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //}
 
     register_all_packages();
-
-#if CK_PLATFORM_ANDROID
-	CkConfig config(env, activity);
-#else
-	CkConfig config;
-#endif
-	CkInit(&config);
 
 	auto schedule = Director::getInstance()->getScheduler();
 	schedule->schedule([](float f) {

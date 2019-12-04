@@ -21,11 +21,13 @@ Enemy::Enemy()
 #else
 	_inputState.reset(new OPRT_touch());
 #endif
-
-	lpAnimMng.AddAnimation(AnimData{ "enemies", "crab", "idle", 4, 0.05f, true });
-	lpAnimMng.SetAnimation(*this, "crab-idle");
-	
 	_inputState->Init(this);
+
+	InitAction();
+	_nowState = STATE::IDLE;
+
+	InitAnimation();
+	lpAnimMng.SetAnimation(*this, "crab-idle");
 
 	this->scheduleUpdate();
 }
@@ -38,4 +40,23 @@ Enemy::~Enemy()
 void Enemy::update(float delta)
 {
 	_inputState->Update();
+}
+
+void Enemy::InitAction(void)
+{
+	{	/* ‘Ò‹@ */
+		AnimData animData;
+		animData.spType = "enemies";
+		animData.spName = "crab";
+		animData.animName = "idle";
+		animData.frame = 4;
+		animData.delay = 0.05f;
+		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+}
+
+void Enemy::InitAnimation(void)
+{
 }

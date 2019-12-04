@@ -27,9 +27,7 @@
 
 #include <cocos2d.h>
 #include <memory>
-#include <ck/bank.h>
-#include <ck/sound.h>
- //#include <Effekseer/Effekseer.h>
+#include <Effekseer/Effekseer.h>
 #include <input/OPRT_state.h>
 
 enum class LAYER
@@ -59,15 +57,14 @@ public:
 	CREATE_FUNC(GameScene);
 
 private:
-	bool LayerSetUp(void);	// Ï¯ÌßÚ²Ô°‚Ì¾¯Ä±¯Ìß
-	bool EffectSetUp(void);	// ´Ìª¸ÄŠÇ—‚Ì¾¯Ä±¯Ìß
+	bool LayerSetUp(void);		// Ï¯ÌßÚ²Ô°‚Ì¾¯Ä±¯Ìß
+	bool EffectSetUp(void);		// ´Ìª¸ÄŠÇ—‚Ì¾¯Ä±¯Ìß
+	bool SoundSetUp(void);		// »³İÄŞ‚Ì¾¯Ä±¯Ìß
 
-//	virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
+	virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
 
 //	std::unique_ptr<efk::EffectManager> _effectMng;
-//	efk::EffectManager* _effectMng;
-	CkBank* _bank;
-	CkSound* _sound;
+	efk::EffectManager* _effectMng;
 };
 
 #endif // __GAME_SCENE_H__

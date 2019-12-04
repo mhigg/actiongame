@@ -25,6 +25,9 @@
     <Filter Include="check">
       <UniqueIdentifier>{d3e18261-5cfd-4a5a-85b8-235d75dc93e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effekseer">
+      <UniqueIdentifier>{91bc4f86-0a7c-463e-a278-ea34dfe3f880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,17 @@
     <ClCompile Include="..\Classes\INPUT_ID.cpp" />
     <ClCompile Include="_DebugConOut.cpp">
       <Filter>_debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EffectMng.cpp" />
+    <ClCompile Include="..\Classes\SoundMng.cpp" />
+    <ClCompile Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\Effekseer.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\EffekseerNative.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\EffekseerRendererNative.cpp">
+      <Filter>Effekseer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +153,17 @@
     <ClInclude Include="..\Classes\CheckInclude.h" />
     <ClInclude Include="_DebugConOut.h">
       <Filter>_debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EffectMng.h" />
+    <ClInclude Include="..\Classes\SoundMng.h" />
+    <ClInclude Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\Effekseer.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\EffekseerNative.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\EffekseerRendererNative.h">
+      <Filter>Effekseer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -210,7 +210,7 @@ void Player::InitAnimation(void)
 		animData.spName = "player";
 		animData.animName = "idle";
 		animData.frame = 4;
-		animData.delay = 0.05f;
+		animData.delay = 0.2f;
 		animData.restore = true;
 
 		lpAnimMng.AddAnimation(animData);

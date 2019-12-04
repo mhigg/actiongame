@@ -52,7 +52,6 @@ public:
 	void Update(cocos2d::Sprite& sprite);
 
 private:
-	std::string _nowActName;	// Œ»İ‚Ì±¸¼®İ–¼
 	ActVec _actFuncList;		// State‚É‰‚¶‚½±¸¼®İŠÖ”Îß²İÀ‚ğŠi”[‚·‚éØ½Ä
 	ActMap _actMap;				// ±¸¼®İÃŞ°À‚ğŠi”[‚·‚é˜A‘z”z—ñ
 };

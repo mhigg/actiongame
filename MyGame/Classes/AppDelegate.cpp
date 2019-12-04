@@ -24,9 +24,9 @@
 
 #include "AppDelegate.h"
 #include "GameScene.h"
-#include "ck/ck.h"
-#include "ck/bank.h"
-#include "ck/sound.h"
+//#include "ck/ck.h"
+//#include "ck/bank.h"
+//#include "ck/sound.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -58,7 +58,7 @@ AppDelegate::~AppDelegate()
 {
 	// シャットダウン。
 	// 実際はここではなくアプリ終了するメソッドなどを作成してやる方がいいと思ふ。
-	CkShutdown();
+//	CkShutdown();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
@@ -124,17 +124,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-#if CK_PLATFORM_ANDROID
-	CkConfig config(env, activity);
-#else
-	CkConfig config;
-#endif
-	CkInit(&config);
-
-	auto schedule = Director::getInstance()->getScheduler();
-	schedule->schedule([](float f) {
-		CkUpdate();
-	}, this, 0.016, CC_REPEAT_FOREVER, 0.0, false, "sounds");
+//#if CK_PLATFORM_ANDROID
+//	CkConfig config(env, activity);
+//#else
+//	CkConfig config;
+//#endif
+//	CkInit(&config);
+//
+//	auto schedule = Director::getInstance()->getScheduler();
+//	schedule->schedule([](float f) {
+//		CkUpdate();
+//	}, this, 0.016, CC_REPEAT_FOREVER, 0.0, false, "sounds");
 
     // create a scene. it's an autorelease object
     auto scene = GameScene::createScene();
@@ -149,7 +149,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 	// 全てのサウンドを止める
-	CkSuspend();
+//	CkSuspend();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
@@ -163,7 +163,7 @@ void AppDelegate::applicationDidEnterBackground() {
 void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 	//　全てのサウンドを再開
-	CkResume();
+//	CkResume();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::resumeAll();

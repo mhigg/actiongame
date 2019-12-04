@@ -24,7 +24,7 @@ bool ActionCtrl::AddAction(const std::string actName, ActData& actData)
 	{
 		_actMap.emplace(actName, std::move(actData));
 		_actMap[actName].act.emplace_back(CheckKey());
-		//_actMap[actName].act.emplace_back(CheckList());
+		_actMap[actName].act.emplace_back(CheckList());
 		_actMap[actName].act.emplace_back(CheckHitObj());
 		_actMap[actName].runAction = _actFuncList[static_cast<int>(actData.state)];
 		return true;
@@ -46,15 +46,20 @@ void ActionCtrl::Update(cocos2d::Sprite& sprite)
 		}
 		return true;
 	};
-
+	
+	int ct = 0;
 	for (auto data : _actMap)
 	{
 		if (checkAct(data.second))
 		{
 			data.second.runAction(sprite, data.second);
-			((Player&)sprite).nowState(data.second.state);
 			SetDir()(sprite, data.second);	// ©Œü‚«‚ÌØ‚è‘Ö‚¦‚ğ‚µ‚Ä‚à‚æ‚¢±¸¼®İ‚Ì‚Æ‚«‚Ì‚İŒÄ‚Ô‚æ‚¤‚É‚·‚é
-			// ¦¦¦±ÆÒ°¼®İØ‚è‘Ö‚¦‚±‚±‚¶‚á‚¾‚ß¦¦¦
+			//return;
+			ct = 1;
 		}
+	}
+	if (ct == 0)
+	{
+		_actMap["Idle"].runAction(sprite, _actMap["Idle"]);
 	}
 }

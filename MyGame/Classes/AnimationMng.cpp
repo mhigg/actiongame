@@ -7,9 +7,10 @@ AnimationMng* AnimationMng::s_instance = nullptr;
 
 void AnimationMng::AddAnimation(AnimData& animData)
 {
+	auto animKey = (animData.spName + "-" + animData.animName);
 	// loading plist file
 	auto frameChache = SpriteFrameCache::getInstance();
-	frameChache->addSpriteFramesWithFile("plists/" + animData.spType + "/" + animData.spName + "-" + animData.animName + ".plist");
+	frameChache->addSpriteFramesWithFile("plists/" + animData.spType + "/" + animKey + ".plist");
 
 	Animation* animation = Animation::create();
 	for (int id = 1; id <= animData.frame; id++)
@@ -17,11 +18,11 @@ void AnimationMng::AddAnimation(AnimData& animData)
 		__String* str;
 		if (animData.frame == 1)
 		{
-			str = __String::createWithFormat((animData.spName + "-" + animData.animName + ".png").c_str(), id);
+			str = __String::createWithFormat((animKey + ".png").c_str(), id);
 		}
 		else
 		{
-			str = __String::createWithFormat((animData.spName + "-" + animData.animName + "-%d.png").c_str(), id);
+			str = __String::createWithFormat((animKey + "-%d.png").c_str(), id);
 		}
 		SpriteFrame* sprite = frameChache->getSpriteFrameByName(str->getCString());
 		animation->addSpriteFrame(sprite);
@@ -30,13 +31,14 @@ void AnimationMng::AddAnimation(AnimData& animData)
 	animation->setDelayPerUnit(animData.delay);
 	animation->setRestoreOriginalFrame(animData.restore);
 
-	AnimationCache::getInstance()->addAnimation(animation, (animData.spName + "-" + animData.animName));
+	AnimationCache::getInstance()->addAnimation(animation, animKey);
 }
 
 void AnimationMng::SetAnimation(cocos2d::Sprite& sprite, const std::string& spriteName, const std::string& animName)
 {
 	auto cache = AnimationCache::getInstance()->getAnimation(spriteName + "-" + animName);
 	auto idle = RepeatForever::create(Animate::create(cache));
+	((Player&)sprite).stopAllActions();
 	((Player&)sprite).runAction(idle);
 }
 

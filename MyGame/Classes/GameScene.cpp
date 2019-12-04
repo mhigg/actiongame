@@ -109,7 +109,7 @@ bool GameScene::init()
 	EffectSetUp();
 	SoundSetUp();
 
-	SOUND("piano")[1]->play();
+//	SOUND("piano")[1]->play();
 
 	this->scheduleUpdate();
     return true;
@@ -240,7 +240,7 @@ bool GameScene::LayerSetUp(void)
 	{
 		// load successed
 		// position the sprite on the center of the screen
-		player->setPosition(Vec2(640,100));
+		player->setPosition(Vec2(200,350));
 	}
 	mainLayer->addChild(player);
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
@@ -274,14 +274,13 @@ bool GameScene::EffectSetUp(void)
 		//effect->release();
 	}
 
-
 	return true;
 }
 
 bool GameScene::SoundSetUp(void)
 {
-	SET_SOUND("piano", "dsptouch.ckb");
-	SOUND("piano")[1]->setLoopCount(-1);
+	//SET_SOUND("piano", "dsptouch.ckb");
+	//SOUND("piano")[1]->setLoopCount(-1);
 
 	return true;
 }

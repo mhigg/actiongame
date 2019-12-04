@@ -1,6 +1,6 @@
 #include "SoundMng.h"
 
-std::unique_ptr<SoundMng, SoundMng::SoundMngDeleter> SoundMng::s_instance(new SoundMng());
+/*std::unique_ptr<SoundMng, SoundMng::SoundMngDeleter> SoundMng::s_instance(new SoundMng());
 
 VecBank SoundMng::GetSound(const std::string& key)
 {
@@ -37,3 +37,4 @@ SoundMng::~SoundMng()
 	//	sound.second->destroy();
 	//}
 }
+*/

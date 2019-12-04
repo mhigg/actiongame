@@ -19,10 +19,10 @@ bool CheckList::operator()(cocos2d::Sprite& sprite, ActData& actData)
 		}
 	}
 
-	if (actData.whiteList.size() > 0)
+	if (actData.blackList.size() <= 0)
 	{
-		return false;
+		return true;
 	}
 
-	return true;
+	return false;
 }

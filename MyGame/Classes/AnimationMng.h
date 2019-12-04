@@ -28,7 +28,7 @@ public:
 	}
 
 	void AddAnimation(AnimData& animData);
-	void SetAnimation(cocos2d::Sprite& sprite, const std::string& animKey);
+	void SetAnimation(cocos2d::Sprite& sprite, const std::string& spriteName, const std::string& animName);
 
 private:
 	AnimationMng();

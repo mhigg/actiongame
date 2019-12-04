@@ -124,6 +124,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
+#if CK_PLATFORM_ANDROID
+	CkConfig config(env, activity);
+#else
+	CkConfig config;
+#endif
+	CkInit(&config);
+
 	auto schedule = Director::getInstance()->getScheduler();
 	schedule->schedule([](float f) {
 		CkUpdate();

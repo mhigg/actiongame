@@ -27,7 +27,7 @@ Player::Player()
 	_nowState = STATE::IDLE;
 
 	InitAnimation();
-	lpAnimMng.SetAnimation(*this, "player-idle");
+	lpAnimMng.SetAnimation(*this, "player", "idle");
 
 	_dir = DIR::CENTER;
 
@@ -236,6 +236,78 @@ void Player::InitAnimation(void)
 		animData.frame = 6;
 		animData.delay = 0.05f;
 		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* 構え */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "stand";
+		animData.frame = 3;
+		animData.delay = 0.1f;
+		animData.restore = false;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* 上構え */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "shoot-up";
+		animData.frame = 1;
+		animData.delay = 1.0f;
+		animData.restore = false;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* 構え走り */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "run-shot";
+		animData.frame = 10;
+		animData.delay = 0.05f;
+		animData.restore = true;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* 壁付き */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "cling";
+		animData.frame = 1;
+		animData.delay = 1.0f;
+		animData.restore = false;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* しゃがみ */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "duck";
+		animData.frame = 1;
+		animData.delay = 1.0f;
+		animData.restore = false;
+
+		lpAnimMng.AddAnimation(animData);
+	}
+
+	{	/* ダメージ */
+		AnimData animData;
+		animData.spType = "player";
+		animData.spName = "player";
+		animData.animName = "hurt";
+		animData.frame = 2;
+		animData.delay = 0.05f;
+		animData.restore = false;
 
 		lpAnimMng.AddAnimation(animData);
 	}

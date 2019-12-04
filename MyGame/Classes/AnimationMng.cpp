@@ -33,9 +33,9 @@ void AnimationMng::AddAnimation(AnimData& animData)
 	AnimationCache::getInstance()->addAnimation(animation, (animData.spName + "-" + animData.animName));
 }
 
-void AnimationMng::SetAnimation(cocos2d::Sprite& sprite, const std::string& animKey)
+void AnimationMng::SetAnimation(cocos2d::Sprite& sprite, const std::string& spriteName, const std::string& animName)
 {
-	auto cache = AnimationCache::getInstance()->getAnimation(animKey);
+	auto cache = AnimationCache::getInstance()->getAnimation(spriteName + "-" + animName);
 	auto idle = RepeatForever::create(Animate::create(cache));
 	((Player&)sprite).runAction(idle);
 }

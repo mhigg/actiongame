@@ -35,7 +35,7 @@ VecSound SoundMng::GetSound(const std::string& key, const std::string& bankName)
 	#ifdef CK_PLATFORM_ANDROID
 		_bankMap.emplace(key, CkBank::newBank(bankName.c_str()));
 	#else
-		_bankMap.emplace(key, CkBank::newBank(bankName.c_str(), kCkPathType_FileSystem));
+		_bankMap.emplace(key, CkBank::newBank(("Resources/" + bankName).c_str(), kCkPathType_ExeDir));
 	#endif
 		for (int idx = 0; idx < _bankMap[key]->getNumSounds(); idx++)
 		{

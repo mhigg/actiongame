@@ -171,28 +171,23 @@ bool GameScene::LayerSetUp(void)
 	groundLayer->setName("groundLayer");
 
 	// map
-	auto stageMap = TMXTiledMap::create("maps/fourthmap.tmx");
+	auto stageMap = TMXTiledMap::create("map.tmx");
 	if (stageMap == nullptr)
 	{
 		// load failed
-		problemLoading("'fourthmap.tmx'");
+		problemLoading("'map.tmx'");
 	}
 	else
 	{
-		auto front = stageMap->getLayer("front_objects");
+		auto front = stageMap->getLayer("front");
 		if (front != nullptr)
 		{
 			front->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
 		}
-		auto isGround = stageMap->getLayer("isGround");
-		if (isGround != nullptr)
+		auto water = stageMap->getLayer("water");
+		if (water != nullptr)
 		{
-			isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-		}
-		auto clear = stageMap->getLayer("clear");
-		if (clear != nullptr)
-		{
-			clear->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
+			water->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
 		}
 		stageMap->setAnchorPoint(Vec2::ZERO);
 		stageMap->setPosition(Vec2::ZERO);

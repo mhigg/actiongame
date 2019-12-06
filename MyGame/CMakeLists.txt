@@ -29,6 +29,21 @@ set(APP_NAME MyGame)
 
 project(${APP_NAME})
 
+include(AndroidNdkModules)
+android_ndk_import_module_cpufeatures()
+
+include_directories(
+        D:/Android/cricket/cricket-1.6.7/inc
+)
+
+link_directories(
+        D:/Android/cricket/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug
+)
+
+link_libraries(
+        D:/Android/cricket/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug/libck.a
+)
+
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
@@ -65,6 +80,7 @@ list(APPEND GAME_SOURCE
      Classes/Effekseer/Effekseer.cpp
      Classes/Effekseer/EffekseerNative.cpp
      Classes/Effekseer/EffekseerRendererNative.cpp
+     Classes/SoundMng.cpp
      Classes/DIR.cpp
      Classes/INPUT_ID.cpp
      Classes/check/CheckCollided.cpp
@@ -90,6 +106,7 @@ list(APPEND GAME_HEADER
      Classes/Effekseer/Effekseer.h
      Classes/Effekseer/EffekseerNative.h
      Classes/Effekseer/EffekseerRendererNative.h
+     Classes/SoundMng.h
      Classes/DIR.h
      Classes/INPUT_ID.h
      Classes/TIMING.h
@@ -192,19 +209,3 @@ if(LINUX OR WINDOWS)
     set(APP_RES_DIR "$<TARGET_FILE_DIR:${APP_NAME}>/Resources")
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
-
-set(CK_ROOT D:/Android/cricket-1.6.7)
-
-include_directories(
-        ${CK_ROOT}/inc
-        )
-
-link_directories(
-        ${CK_ROOT}/lib/android/ndk/${ANDROID_ABI}/debug
-        )
-
-target_link_libraries(
-        ${APP_NAME}
-
-
-)

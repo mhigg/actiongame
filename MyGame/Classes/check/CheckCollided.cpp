@@ -22,18 +22,21 @@ bool CheckHitObj::operator()(Sprite& sprite, ActData& actData)
 	auto mapSize = map->getMapSize();
 	auto tileSize = map->getTileSize();
 	auto pos = ((Player&)sprite).getPosition();
-	auto col1 = Vec2((pos.x + actData.col[0].x) / tileSize.width, mapSize.height - (pos.y + actData.col[0].y) / tileSize.height);
-	auto col2 = Vec2((pos.x + actData.col[1].x) / tileSize.width, mapSize.height - (pos.y + actData.col[1].y) / tileSize.height);
 
-	if (CheckOverArea()(col1, mapSize) && CheckOverArea()(col2, mapSize))
+	for (int colIdx = 0; colIdx < actData.col.size(); colIdx++)
 	{
-		if (ground->getTileGIDAt(col1) == 0 && ground->getTileGIDAt(col2) == 0)
+		auto col = Vec2((pos.x + actData.col[colIdx].x) / tileSize.width, mapSize.height - (pos.y + actData.col[colIdx].y) / tileSize.height);
+		if (!CheckOverArea()(col, mapSize))
 		{
-			return true;
+			return false;
+		}
+		if (ground->getTileGIDAt(col) != 0)
+		{
+			return false;
 		}
 	}
 
-	return false;
+	return true;
 }
 
 void CheckHitSprites::operator()(const cocos2d::Sprite& sprite1, const cocos2d::Sprite& sprite2)

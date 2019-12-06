@@ -26,9 +26,10 @@
 #define __GAME_SCENE_H__
 
 #include <cocos2d.h>
-#include <memory>
-#include <Effekseer/Effekseer.h>
+//#include <Effekseer/Effekseer.h>
 #include <input/OPRT_state.h>
+
+#pragma execution_character_set("utf-8")
 
 enum class LAYER
 {
@@ -58,13 +59,13 @@ public:
 
 private:
 	bool LayerSetUp(void);		// Ï¯ÌßÚ²Ô°‚Ì¾¯Ä±¯Ìß
-	bool EffectSetUp(void);		// ´Ìª¸ÄŠÇ—‚Ì¾¯Ä±¯Ìß
+//	bool EffectSetUp(void);		// ´Ìª¸ÄŠÇ—‚Ì¾¯Ä±¯Ìß
 	bool SoundSetUp(void);		// »³İÄŞ‚Ì¾¯Ä±¯Ìß
 
-	virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
+	// ¹Ş°Ñ¼°İ“à‚Ì•`‰æˆ—(Scene¸×½‚æ‚èµ°ÊŞ°Û°ÄŞ, ´Ìª¸ÄÄ¶‚É•K—v)
+//	virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
 
-//	std::unique_ptr<efk::EffectManager> _effectMng;
-	efk::EffectManager* _effectMng;
+//	efk::EffectManager* _effectMng;
 };
 
 #endif // __GAME_SCENE_H__

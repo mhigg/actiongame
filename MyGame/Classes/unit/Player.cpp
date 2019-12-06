@@ -262,6 +262,18 @@ void Player::InitAnimation(void)
 		lpAnimMng.AddAnimation(animData);
 	}
 
+	//{	/* óéâ∫ */
+	//	AnimData animData;
+	//	animData.spType = "player";
+	//	animData.spName = "player";
+	//	animData.animName = "fall";
+	//	animData.frame = 1;
+	//	animData.delay = 0.05f;
+	//	animData.restore = true;
+
+	//	lpAnimMng.AddAnimation(animData);
+	//}
+
 	{	/* ç\Ç¶ */
 		AnimData animData;
 		animData.spType = "player";

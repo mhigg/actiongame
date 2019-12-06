@@ -26,7 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include <unit/Player.h>
 #include <unit/Enemy.h>
-#include <EffectMng.h>
+//#include <EffectMng.h>
 #include <SoundMng.h>
 
 USING_NS_CC;
@@ -89,8 +89,8 @@ bool GameScene::init()
 
     // add a label shows "We are Japanese People"
     // create and initialize a label
-
-    auto label = Label::createWithTTF("We are Japanese People", "fonts/Marker Felt.ttf", 24);
+	
+    auto label = Label::createWithTTF("1816212_Kuboyama_Naoki", "fonts/Marker Felt.ttf", 24);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -105,11 +105,11 @@ bool GameScene::init()
 		this->addChild(label, 1);
 	}
 
-	LayerSetUp();
-	EffectSetUp();
-	SoundSetUp();
+	LayerSetUp();SoundSetUp();
+//	EffectSetUp();
 
-//	SOUND("piano")[1]->play();
+
+	SOUND("piano")[1]->play();
 
 	this->scheduleUpdate();
     return true;
@@ -128,7 +128,8 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
-	_effectMng->update();
+//	_effectMng->update();
+	lpSoundMng.Update();
 }
 
 bool GameScene::LayerSetUp(void)
@@ -178,13 +179,21 @@ bool GameScene::LayerSetUp(void)
 	}
 	else
 	{
-		// load successed
-		//auto frontBlock = stageMap->getLayer("front_objects");
-		//frontBlock->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-		////auto isGround = stageMap->getLayer("isground");
-		////isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
-		//auto wall = stageMap->getLayer("walls");
-		//wall->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
+		auto front = stageMap->getLayer("front_objects");
+		if (front != nullptr)
+		{
+			front->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+		}
+		auto isGround = stageMap->getLayer("isGround");
+		if (isGround != nullptr)
+		{
+			isGround->setGlobalZOrder(static_cast<int>(LAYER::GROUND_MIDDLE));
+		}
+		auto clear = stageMap->getLayer("clear");
+		if (clear != nullptr)
+		{
+			clear->setGlobalZOrder(static_cast<int>(LAYER::GROUND_FRONT));
+		}
 		stageMap->setAnchorPoint(Vec2::ZERO);
 		stageMap->setPosition(Vec2::ZERO);
 		stageMap->setName("mapData");
@@ -240,7 +249,7 @@ bool GameScene::LayerSetUp(void)
 	{
 		// load successed
 		// position the sprite on the center of the screen
-		player->setPosition(Vec2(200,350));
+		player->setPosition(Vec2(600,450));
 	}
 	mainLayer->addChild(player);
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
@@ -251,43 +260,42 @@ bool GameScene::LayerSetUp(void)
 	return true;
 }
 
-bool GameScene::EffectSetUp(void)
-{
-	auto director = Director::getInstance();
-	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
-	_effectMng = efk::EffectManager::create(director->getVisibleSize());
-
-	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
-	if (effect != nullptr)
-	{
-		auto emitter = efk::EffectEmitter::create(_effectMng);
-		emitter->setEffect(effect);
-		emitter->setPlayOnEnter(true);
-
-		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-		emitter->setPosition(Vec2(320, 150));
-
-		// emitter->setScale(13);
-		this->addChild(emitter, 0);
-
-		// No need (because it uses autorelease after 1.41)
-		//effect->release();
-	}
-
-	return true;
-}
+//bool GameScene::EffectSetUp(void)
+//{
+//	auto director = Director::getInstance();
+//	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
+//	_effectMng = efk::EffectManager::create(director->getVisibleSize());
+//
+//	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
+//	if (effect != nullptr)
+//	{
+//		auto emitter = efk::EffectEmitter::create(_effectMng);
+//		emitter->setEffect(effect);
+//		emitter->setPlayOnEnter(true);
+//
+//		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+//		emitter->setPosition(Vec2(320, 150));
+//
+//		// emitter->setScale(13);
+//		this->addChild(emitter, 0);
+//		// No need (because it uses autorelease after 1.41)
+//		//effect->release();
+//	}
+//
+//	return true;
+//}
 
 bool GameScene::SoundSetUp(void)
 {
-	//SET_SOUND("piano", "dsptouch.ckb");
-	//SOUND("piano")[1]->setLoopCount(-1);
+	SET_SOUND("piano", "dsptouch.ckb");
+	SOUND("piano")[1]->setLoopCount(-1);
 
 	return true;
 }
 
-void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
-{
-	_effectMng->begin(renderer, _globalZOrder);
-	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
-	_effectMng->end(renderer, _globalZOrder);
-}
+//void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
+//{
+//	_effectMng->begin(renderer, _globalZOrder);
+//	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
+//	_effectMng->end(renderer, _globalZOrder);
+//}

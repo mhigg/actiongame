@@ -24,9 +24,7 @@
 
 #include "AppDelegate.h"
 #include "GameScene.h"
-//#include "ck/ck.h"
-//#include "ck/bank.h"
-//#include "ck/sound.h"
+#include "SoundMng.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -50,15 +48,14 @@ static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 576);
 //static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 //static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 //
+
 AppDelegate::AppDelegate()
 {
 }
 
 AppDelegate::~AppDelegate() 
 {
-	// シャットダウン。
-	// 実際はここではなくアプリ終了するメソッドなどを作成してやる方がいいと思ふ。
-//	CkShutdown();
+	lpSoundMng.Shutdown();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
@@ -90,9 +87,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("MyGame", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("KuboyamaNaoki", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-        glview = GLViewImpl::create("MyGame");
+        glview = GLViewImpl::create("KuboyamaNaoki");
 #endif
         director->setOpenGLView(glview);
     }
@@ -124,18 +121,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-//#if CK_PLATFORM_ANDROID
-//	CkConfig config(env, activity);
-//#else
-//	CkConfig config;
-//#endif
-//	CkInit(&config);
-//
-//	auto schedule = Director::getInstance()->getScheduler();
-//	schedule->schedule([](float f) {
-//		CkUpdate();
-//	}, this, 0.016, CC_REPEAT_FOREVER, 0.0, false, "sounds");
-
     // create a scene. it's an autorelease object
     auto scene = GameScene::createScene();
 
@@ -149,7 +134,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 	// 全てのサウンドを止める
-//	CkSuspend();
+	lpSoundMng.Suspend();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
@@ -163,7 +148,7 @@ void AppDelegate::applicationDidEnterBackground() {
 void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 	//　全てのサウンドを再開
-//	CkResume();
+	lpSoundMng.Resume();
 
 #if USE_AUDIO_ENGINE
     AudioEngine::resumeAll();

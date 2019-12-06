@@ -27,7 +27,7 @@ Enemy::Enemy()
 	_nowState = STATE::IDLE;
 
 	InitAnimation();
-	lpAnimMng.SetAnimation(*this, "crab", "idle");
+	//lpAnimMng.SetAnimation(*this, "crab", "idle");
 
 	this->scheduleUpdate();
 }

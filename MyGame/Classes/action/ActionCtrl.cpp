@@ -9,6 +9,7 @@ ActionCtrl::ActionCtrl()
 	_actFuncList.emplace_back(MoveLR());
 	_actFuncList.emplace_back(JumpUp());
 	_actFuncList.emplace_back(Jumping());
+	_actFuncList.emplace_back(JumpLR());
 	_actFuncList.emplace_back(FallDown());
 	_actFuncList.emplace_back(Falling());
 	_actFuncList.emplace_back(Idling());

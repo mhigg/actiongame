@@ -117,8 +117,10 @@ void Player::InitAction(void)
 		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::IDLE);
 		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.blackList.emplace_back(STATE::JUMPING);
+		actData.blackList.emplace_back(STATE::JUMPMOVE);
 		actData.whiteList.emplace_back(STATE::FALLING);
+//		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.dir = DIR::LEFT;
 		actData.col[0] = Vec2{ -30, 50 };
 		actData.col[1] = Vec2{ -30,-50 };
@@ -134,8 +136,10 @@ void Player::InitAction(void)
 		actData.state = STATE::MOVE;
 		actData.whiteList.emplace_back(STATE::IDLE);
 		actData.whiteList.emplace_back(STATE::MOVE);
-		actData.whiteList.emplace_back(STATE::JUMP);
+		actData.blackList.emplace_back(STATE::JUMPING);
+		actData.blackList.emplace_back(STATE::JUMPMOVE);
 		actData.whiteList.emplace_back(STATE::FALLING);
+//		actData.whiteList.emplace_back(STATE::JUMP);
 		actData.dir = DIR::RIGHT;
 		actData.col[0] = Vec2{ 30, 50 };
 		actData.col[1] = Vec2{ 30,-50 };
@@ -152,6 +156,7 @@ void Player::InitAction(void)
 		actData.whiteList.emplace_back(STATE::IDLE);
 		actData.whiteList.emplace_back(STATE::MOVE);
 		actData.blackList.emplace_back(STATE::FALLING);
+		actData.blackList.emplace_back(STATE::JUMPMOVE);
 		actData.dir = _dir;
 		actData.col[0] = Vec2{  20, 60 };
 		actData.col[1] = Vec2{ -20, 60 };
@@ -164,7 +169,6 @@ void Player::InitAction(void)
 	{	/* ¼Þ¬ÝÌß’†“o˜^ */
 		ActData actData;
 		actData.state = STATE::JUMPING;
-		actData.blackList.emplace_back(STATE::IDLE);
 		actData.blackList.emplace_back(STATE::MOVE);
 		actData.blackList.emplace_back(STATE::FALL);
 		actData.blackList.emplace_back(STATE::FALLING);
@@ -179,10 +183,43 @@ void Player::InitAction(void)
 		_actCtrl->AddAction("Jumping", actData);
 	}
 
+	{	/* ¼Þ¬ÝÌß’†‚Ì¶ˆÚ“® */
+		ActData actData;
+		actData.state = STATE::JUMPMOVE;
+		actData.blackList.emplace_back(STATE::MOVE);
+		actData.whiteList.emplace_back(STATE::FALL);
+		actData.dir = DIR::LEFT;
+		actData.col[0] = Vec2{ -30, 50 };
+		actData.col[1] = Vec2{ -30,-50 };
+		actData.distance = Point(-4.0f, 0.0f);
+		actData.inputID = INPUT_ID::LEFT;
+		actData.timing = TIMING::ON;
+
+		_actCtrl->AddAction("JumpLeft", actData);
+	}
+
+	{	/* ¼Þ¬ÝÌß’†‚Ì‰EˆÚ“® */
+		ActData actData;
+		actData.state = STATE::JUMPMOVE;
+		actData.blackList.emplace_back(STATE::MOVE);
+		actData.whiteList.emplace_back(STATE::FALL);
+		actData.dir = DIR::RIGHT;
+		actData.col[0] = Vec2{ 30, 50 };
+		actData.col[1] = Vec2{ 30,-50 };
+		actData.distance = Point(4.0f, 0.0f);
+		actData.inputID = INPUT_ID::RIGHT;
+		actData.timing = TIMING::ON;
+
+		_actCtrl->AddAction("JumpRight", actData);
+	}
+
 	{	/* —Ž‰ºŠJŽn“o˜^ */
 		ActData actData;
 		actData.state = STATE::FALL;
 		actData.blackList.emplace_back(STATE::FALLING);
+		actData.whiteList.emplace_back(STATE::IDLE);
+		//actData.whiteList.emplace_back(STATE::MOVE);
+		actData.whiteList.emplace_back(STATE::JUMPMOVE);
 		actData.dir = _dir;
 		actData.col[0] = Vec2{  20, -80 };
 		actData.col[1] = Vec2{ -20, -80 };
@@ -199,8 +236,8 @@ void Player::InitAction(void)
 		actData.blackList.emplace_back(STATE::JUMP);
 		actData.blackList.emplace_back(STATE::JUMPING);
 		actData.blackList.emplace_back(STATE::FALL);
-		actData.whiteList.emplace_back(STATE::IDLE);
 		actData.whiteList.emplace_back(STATE::FALLING);
+		//actData.whiteList.emplace_back(STATE::JUMPMOVE);
 		actData.dir = _dir;
 		actData.col[0] = Vec2{  20, -80 };
 		actData.col[1] = Vec2{ -20, -80 };
@@ -217,6 +254,7 @@ void Player::InitAction(void)
 		actData.blackList.emplace_back(STATE::MOVE);
 		actData.blackList.emplace_back(STATE::JUMP);
 		actData.blackList.emplace_back(STATE::JUMPING);
+		actData.blackList.emplace_back(STATE::JUMPMOVE);
 		actData.blackList.emplace_back(STATE::FALLING);
 		actData.dir = _dir;
 		actData.col[0] = Vec2{ 20, -80 };

@@ -16,6 +16,7 @@ enum class STATE
 	MOVE,		// €Ъ“®Џу‘Ф
 	JUMP,		// јЮ¬ЭМЯЏу‘Ф
 	JUMPING,	// јЮ¬ЭМЯ’†
+	JUMPMOVE,	// јЮ¬ЭМЯ’†€Ъ“®
 	FALL,		// —Ћ‰єЏу‘Ф
 	FALLING,	// —Ћ‰є’†
 	IDLE,		// ’вЋ~Џу‘Ф

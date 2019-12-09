@@ -106,7 +106,7 @@ bool GameScene::init()
 	}
 
 	LayerSetUp();SoundSetUp();
-//	EffectSetUp();
+	EffectSetUp();
 
 
 	SOUND("piano")[1]->play();
@@ -128,7 +128,7 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::update(float delta)
 {
-//	_effectMng->update();
+	_effectMng->update();
 	lpSoundMng.Update();
 }
 
@@ -255,30 +255,30 @@ bool GameScene::LayerSetUp(void)
 	return true;
 }
 
-//bool GameScene::EffectSetUp(void)
-//{
-//	auto director = Director::getInstance();
-//	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
-//	_effectMng = efk::EffectManager::create(director->getVisibleSize());
-//
-//	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
-//	if (effect != nullptr)
-//	{
-//		auto emitter = efk::EffectEmitter::create(_effectMng);
-//		emitter->setEffect(effect);
-//		emitter->setPlayOnEnter(true);
-//
-//		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-//		emitter->setPosition(Vec2(320, 150));
-//
-//		// emitter->setScale(13);
-//		this->addChild(emitter, 0);
-//		// No need (because it uses autorelease after 1.41)
-//		//effect->release();
-//	}
-//
-//	return true;
-//}
+bool GameScene::EffectSetUp(void)
+{
+	auto director = Director::getInstance();
+	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
+	_effectMng = efk::EffectManager::create(director->getVisibleSize());
+
+	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
+	if (effect != nullptr)
+	{
+		auto emitter = efk::EffectEmitter::create(_effectMng);
+		emitter->setEffect(effect);
+		emitter->setPlayOnEnter(true);
+
+		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+		emitter->setPosition(Vec2(320, 150));
+
+		// emitter->setScale(13);
+		this->addChild(emitter, 0);
+		// No need (because it uses autorelease after 1.41)
+		//effect->release();
+	}
+
+	return true;
+}
 
 bool GameScene::SoundSetUp(void)
 {
@@ -288,9 +288,9 @@ bool GameScene::SoundSetUp(void)
 	return true;
 }
 
-//void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
-//{
-//	_effectMng->begin(renderer, _globalZOrder);
-//	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
-//	_effectMng->end(renderer, _globalZOrder);
-//}
+void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
+{
+	_effectMng->begin(renderer, _globalZOrder);
+	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
+	_effectMng->end(renderer, _globalZOrder);
+}

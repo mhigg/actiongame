@@ -21,7 +21,7 @@ bool Jumping::operator()(cocos2d::Sprite & sprite, ActData & actData)
 	if (jumpSpeed.y < 0)
 	{
 		// I‚í‚Á‚½‚çfall‚ÉˆÚs
-		((Player&)sprite).nowState(STATE::FALLING);
+		((Player&)sprite).nowState(STATE::FALL);
 	}
 
 	return true;

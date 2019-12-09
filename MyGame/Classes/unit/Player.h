@@ -17,6 +17,7 @@ public:
 	const STATE nowState(void) const;			// Œ»İ‚Ì±¸¼®İó‘Ô‚ğæ“¾‚·‚é
 	void nowState(const STATE state);			// Œ»İ‚Ì±¸¼®İó‘Ô‚ğ¾¯Ä‚·‚é
 	const cocos2d::Vec2 jumpSpeed(void) const;	// Œ»İ‚Ì¼Ş¬İÌß‘¬“x‚ğæ“¾‚·‚é
+	void jumpSpeed(const cocos2d::Vec2 speed);	// Œ»İ‚Ì¼Ş¬İÌß‘¬“x‚ğ¾¯Ä‚·‚é
 	const DIR dir(void) const;					// Œü‚«‚ğæ“¾‚·‚é
 	void dir(const DIR direction);				// Œü‚«‚ğ¾¯Ä‚·‚é
 	const uniqueOPRT& inputState(void);			// “ü—Íî•ñ‚ğæ“¾‚·‚é

@@ -15,7 +15,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+	// Android用のCricketの初期化処理
 	JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(
 		JNIEnv * env,
 		jclass activity,
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 #endif
 
-using VecSound = std::vector<CkSound*>;
+using VecSound = std::vector<CkSound*>;	// CkSoundを格納するvector型
 
 class SoundMng
 {
@@ -41,10 +41,13 @@ public:
 		return (*s_instance);
 	}
 
+	// 指定したkeyのｻｳﾝﾄﾞを取得する。無ければ新たにｻｳﾝﾄﾞﾃﾞｰﾀを作成する
 	VecSound GetSound(const std::string& key);
+
+	// 指定したbankNameのｻｳﾝﾄﾞを取得し次回以降呼び出しやすいようにkeyを設定する。無ければ新たにｻｳﾝﾄﾞﾃﾞｰﾀを作成する
 	VecSound GetSound(const std::string& key, const std::string& bankName);
 
-	void Update(void);
+	void Update(void);		// CkUpdate 毎ﾌﾚｰﾑ呼び出す
 	void Shutdown(void);	// CkShutdownを呼び出しｵｰﾃﾞｨｵを終了する
 	void Suspend(void);		// CkSuspendを呼び出し音を一時停止する
 	void Resume(void);		// CkResumeを呼び出し音を再開する

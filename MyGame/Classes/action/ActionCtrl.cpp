@@ -54,7 +54,6 @@ void ActionCtrl::Update(cocos2d::Sprite& sprite)
 		{
 			data.second.runAction(sprite, data.second);
 			SetDir()(sprite, data.second);	// ©Œü‚«‚ÌØ‚è‘Ö‚¦‚ğ‚µ‚Ä‚à‚æ‚¢±¸¼®İ‚Ì‚Æ‚«‚Ì‚İŒÄ‚Ô‚æ‚¤‚É‚·‚é
-			//return;
 			ct = 1;
 		}
 	}

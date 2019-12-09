@@ -244,7 +244,7 @@ bool GameScene::LayerSetUp(void)
 	{
 		// load successed
 		// position the sprite on the center of the screen
-		player->setPosition(Vec2(600,450));
+		player->setPosition(Vec2(580,300));
 	}
 	mainLayer->addChild(player);
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));

@@ -26,6 +26,10 @@ void OPRT_key::Init(cocos2d::Node* sp)
 		{
 			_pressFlags[static_cast<int>(INPUT_ID::DOWN)][inputTrg] = true;
 		}
+		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_SPACE)
+		{
+			_pressFlags[static_cast<int>(INPUT_ID::BTN_1)][inputTrg] = true;
+		}
 	};
 	listener->onKeyReleased = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 	{
@@ -44,6 +48,10 @@ void OPRT_key::Init(cocos2d::Node* sp)
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
 			_pressFlags[static_cast<int>(INPUT_ID::DOWN)][inputTrg] = false;
+		}
+		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_SPACE)
+		{
+			_pressFlags[static_cast<int>(INPUT_ID::BTN_1)][inputTrg] = false;
 		}
 	};
 

@@ -3,17 +3,17 @@
 
 struct ActData;
 
+struct CheckOverArea
+{
+	// 教咦材偺斖埻联
+	bool operator()(const cocos2d::Vec2& position, const cocos2d::Vec2& areaLimit);
+};
+
 struct CheckHitObj
 {
 	// 懌応傗暻偲偄偭偨席踢偲偺摉偨傝敾掕
 	// 摉偨偭偰偄偨傜false傪曉偡
 	bool operator()(cocos2d::Sprite& sprite, ActData& actData);
-};
-
-struct CheckOverArea
-{
-	// 教咦材偺斖埻联
-	bool operator()(const cocos2d::Vec2& position, const cocos2d::Vec2& areaLimit);
 };
 
 struct CheckHitSprites

@@ -2,14 +2,14 @@
 #include <unit/Player.h>
 #include "ActionInclude.h"
 #include "CheckInclude.h"
+//#include <_DebugConOut.h>
 
 ActionCtrl::ActionCtrl()
 {
-	// STATE‚É‰‚¶‚½±¸¼®İ‚ÌŠÖ”Îß²İÀ‚ğØ½Ä‚É“o˜^
+	// STATEï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ‚ÌŠÖï¿½ï¿½ß²ï¿½ï¿½ï¿½ï¿½Ø½Ä‚É“oï¿½^
 	_actFuncList.emplace_back(MoveLR());
 	_actFuncList.emplace_back(JumpUp());
 	_actFuncList.emplace_back(Jumping());
-	_actFuncList.emplace_back(JumpLR());
 	_actFuncList.emplace_back(FallDown());
 	_actFuncList.emplace_back(Falling());
 	_actFuncList.emplace_back(Idling());
@@ -36,7 +36,7 @@ bool ActionCtrl::AddAction(const std::string actName, ActData& actData)
 
 void ActionCtrl::Update(cocos2d::Sprite& sprite)
 {
-	// Áª¯¸ŠÖ”
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 	auto checkAct = [&sprite](ActData& data) {
 		for (auto check : data.act)
 		{
@@ -48,17 +48,30 @@ void ActionCtrl::Update(cocos2d::Sprite& sprite)
 		return true;
 	};
 	
-	int ct = 0;
+	bool changeAct = false;
 	for (auto data : _actMap)
 	{
 		if (checkAct(data.second))
 		{
 			data.second.runAction(sprite, data.second);
-			SetDir()(sprite, data.second);	// ©Œü‚«‚ÌØ‚è‘Ö‚¦‚ğ‚µ‚Ä‚à‚æ‚¢±¸¼®İ‚Ì‚Æ‚«‚Ì‚İŒÄ‚Ô‚æ‚¤‚É‚·‚é
-			ct = 1;
+
+			auto state = ((Player&)sprite).nowState();
+			if (state == STATE::MOVE)
+			{
+				SetDir()(sprite, data.second);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌØ‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½æ‚¢ï¿½ï¿½ï¿½ï¿½İ‚Ì‚Æ‚ï¿½ï¿½Ì‚İŒÄ‚Ô‚æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
+			}
+
+			if (!(state == STATE::JUMP || state == STATE::JUMPING
+			 ||   state == STATE::FALL || state == STATE::FALLING))
+			{
+				//TRACE("changeState\n");
+				((Player&)sprite).nowState(data.second.state);
+			}
+			changeAct = true;
 		}
 	}
-	if (ct == 0)
+
+	if (!changeAct)
 	{
 		_actMap["Idle"].runAction(sprite, _actMap["Idle"]);
 	}

@@ -26,7 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include <unit/Player.h>
 #include <unit/Enemy.h>
-//#include <EffectMng.h>
+#include <EffectMng.h>
 #include <SoundMng.h>
 
 USING_NS_CC;
@@ -249,33 +249,27 @@ bool GameScene::LayerSetUp(void)
 	mainLayer->addChild(player);
 	this->addChild(mainLayer, static_cast<int>(LAYER::MAIN));
 
-	auto effectLayer = Layer::create();
-	effectLayer->setName("effectLayer");
-
 	return true;
 }
 
 bool GameScene::EffectSetUp(void)
 {
 	auto director = Director::getInstance();
-	//_effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
 	_effectMng = efk::EffectManager::create(director->getVisibleSize());
 
-	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
-	if (effect != nullptr)
 	{
-		auto emitter = efk::EffectEmitter::create(_effectMng);
-		emitter->setEffect(effect);
-		emitter->setPlayOnEnter(true);
+		EffectData effectData;
+		effectData.effectMng = _effectMng;
+		effectData.efkName = "Laser01.efk";
+		effectData.playOnEnter = true;
+		effectData.rotation = Vec3(0, 90, 0);
+		effectData.position = Vec2(320, 150);
+		effectData.scale = 1;
 
-		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-		emitter->setPosition(Vec2(320, 150));
-
-		// emitter->setScale(13);
-		this->addChild(emitter, 0);
-		// No need (because it uses autorelease after 1.41)
-		//effect->release();
+		lpEffectMng.AddEffect("Laser", effectData);
 	}
+
+	this->addChild(lpEffectMng.GetEmitter("Laser"), 0);
 
 	return true;
 }

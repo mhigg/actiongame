@@ -27,7 +27,7 @@ public:
 	}
 
 	// V‚µ‚¢±ÆÒ°¼®İ‚ğ’Ç‰Á‚·‚é
-	void AddAnimation(AnimData& animData);
+	void AddAnimation(const AnimData& animData);
 
 	// w’è‚µ‚½±ÆÒ°¼®İ‚ğ¾¯Ä‚·‚é
 	void SetAnimation(cocos2d::Sprite& sprite, const std::string& spriteName, const std::string& animName);

@@ -5,7 +5,7 @@ USING_NS_CC;
 
 AnimationMng* AnimationMng::s_instance = nullptr;
 
-void AnimationMng::AddAnimation(AnimData& animData)
+void AnimationMng::AddAnimation(const AnimData& animData)
 {
 	auto animKey = (animData.spName + "-" + animData.animName);
 	// loading plist file

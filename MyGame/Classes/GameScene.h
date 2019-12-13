@@ -35,8 +35,9 @@ enum class LAYER
 {
 	BACK		  = -100,	// backImageLayer
 	MIDDLE		  = - 50,	// middleImageLayer
-	GROUND		  = - 20,	// backBlocksLayer
+	GROUND		  = - 20,	// mainBlocksLayer
 	MAIN		  =    0,	// player and enemy
+	GROUND_BACK	  =   30,	// backBlocksLayer
 	GROUND_MIDDLE =   50,	// middleBlocksLayer
 	GROUND_FRONT  =  100,	// frontBlocksLayer
 	MAX

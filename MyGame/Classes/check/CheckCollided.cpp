@@ -28,10 +28,26 @@ bool CheckHitObj::operator()(Sprite& sprite, ActData& actData)
 		auto col = Vec2((pos.x + actData.col[colIdx].x) / tileSize.width, mapSize.height - (pos.y + actData.col[colIdx].y) / tileSize.height);
 		if (!CheckOverArea()(col, mapSize))
 		{
+			if (((Player&)sprite).nowState() == STATE::JUMPING)
+			{
+				((Player&)sprite).nowState(STATE::FALL);
+			}
+			if (((Player&)sprite).nowState() == STATE::FALLING)
+			{
+				((Player&)sprite).nowState(STATE::IDLE);
+			}
 			return false;
 		}
 		if (ground->getTileGIDAt(col) != 0)
 		{
+			if (((Player&)sprite).nowState() == STATE::JUMPING)
+			{
+				((Player&)sprite).nowState(STATE::FALL);
+			}
+			if (((Player&)sprite).nowState() == STATE::FALLING)
+			{
+				((Player&)sprite).nowState(STATE::IDLE);
+			}
 			return false;
 		}
 	}

@@ -6,7 +6,7 @@
 
 ActionCtrl::ActionCtrl()
 {
-	// STATE�ɉ���������݂̊֐��߲����ؽĂɓo�^
+	// STATEに応じたｱｸｼｮﾝの関数ﾎﾟｲﾝﾀをﾘｽﾄに登録
 	_actFuncList.emplace_back(MoveLR());
 	_actFuncList.emplace_back(JumpUp());
 	_actFuncList.emplace_back(Jumping());
@@ -36,7 +36,7 @@ bool ActionCtrl::AddAction(const std::string actName, ActData& actData)
 
 void ActionCtrl::Update(cocos2d::Sprite& sprite)
 {
-	// �����֐�
+	// ﾁｪｯｸ関数
 	auto checkAct = [&sprite](ActData& data) {
 		for (auto check : data.act)
 		{
@@ -58,7 +58,7 @@ void ActionCtrl::Update(cocos2d::Sprite& sprite)
 			auto state = ((Player&)sprite).nowState();
 			if (state == STATE::MOVE)
 			{
-				SetDir()(sprite, data.second);	// �������̐؂�ւ������Ă��悢����݂̂Ƃ��̂݌ĂԂ悤�ɂ���
+				SetDir()(sprite, data.second);	// ←向きの切り替えをしてもよいｱｸｼｮﾝのときのみ呼ぶようにする
 			}
 
 			if (!(state == STATE::JUMP || state == STATE::JUMPING

@@ -7,8 +7,8 @@
 #include "ck/sound.h"
 
 #define lpSoundMng SoundMng::GetInstance()
-#define SOUND(KEY) lpSoundMng.GetSound(KEY)						// KEYに応じたｻｳﾝﾄﾞを取得
-#define SET_SOUND(KEY, BANK) lpSoundMng.GetSound(KEY, BANK)		// BANKからｻｳﾝﾄﾞを読み込んで保存する KEYで呼び出し名を付ける
+#define SOUND(KEY) lpSoundMng.GetSound(KEY)	// KEYに応じたｻｳﾝﾄﾞを取得
+#define SET_SOUND(KEY, F_NAME, ISBANK) lpSoundMng.GetSound(KEY, F_NAME, ISBANK)	// BANKからｻｳﾝﾄﾞを読み込んで保存する KEYで呼び出し名を付ける
 
 #ifndef __ANDROID_JNI__
 #define __ANDROID_JNI__
@@ -44,8 +44,8 @@ public:
 	// 指定したkeyのｻｳﾝﾄﾞを取得する。無ければ新たにｻｳﾝﾄﾞﾃﾞｰﾀを作成する
 	VecSound GetSound(const std::string& key);
 
-	// 指定したbankNameのｻｳﾝﾄﾞを取得し次回以降呼び出しやすいようにkeyを設定する。無ければ新たにｻｳﾝﾄﾞﾃﾞｰﾀを作成する
-	VecSound GetSound(const std::string& key, const std::string& bankName);
+	// 指定したfileNameのｻｳﾝﾄﾞを取得し次回以降呼び出しやすいようにkeyを設定する。無ければ新たにｻｳﾝﾄﾞﾃﾞｰﾀを作成する
+	VecSound GetSound(const std::string& key, const std::string& fileName, bool isBank);
 
 	void Update(void);		// CkUpdate 毎ﾌﾚｰﾑ呼び出す
 	void Shutdown(void);	// CkShutdownを呼び出しｵｰﾃﾞｨｵを終了する

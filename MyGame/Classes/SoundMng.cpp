@@ -25,22 +25,33 @@ extern "C" {
 
 VecSound SoundMng::GetSound(const std::string& key)
 {
-	return GetSound(key, key);
+	return GetSound(key, key, false);
 }
 
-VecSound SoundMng::GetSound(const std::string& key, const std::string& bankName)
+VecSound SoundMng::GetSound(const std::string& key, const std::string& fileName, bool isBank)
 {
 	if (_bankMap.find(key) == _bankMap.end())
 	{
-	#ifdef CK_PLATFORM_ANDROID
-		_bankMap.emplace(key, CkBank::newBank(bankName.c_str()));
-	#else
-		_bankMap.emplace(key, CkBank::newBank(("Resources/" + bankName).c_str(), kCkPathType_ExeDir));
-	#endif
-		for (int idx = 0; idx < _bankMap[key]->getNumSounds(); idx++)
+		if (isBank)
 		{
-			auto sound = _bankMap[key]->getSoundName(idx);
-			_soundMap[key].emplace_back(CkSound::newBankSound(_bankMap[key], sound));
+		#ifdef CK_PLATFORM_ANDROID
+			_bankMap.emplace(key, CkBank::newBank(fileName.c_str()));
+		#else
+			_bankMap.emplace(key, CkBank::newBank(("Resources/" + fileName).c_str(), kCkPathType_ExeDir));
+		#endif
+			for (int idx = 0; idx < _bankMap[key]->getNumSounds(); idx++)
+			{
+				auto sound = _bankMap[key]->getSoundName(idx);
+				_soundMap[key].emplace_back(CkSound::newBankSound(_bankMap[key], sound));
+			}
+		}
+		else
+		{
+		#ifdef CK_PLATFORM_ANDROID
+			_soundMap[key].emplace_back(CkSound::newStreamSound(fileName.c_str()));
+		#else
+			_soundMap[key].emplace_back(CkSound::newStreamSound(("Resources/" + fileName).c_str(), kCkPathType_ExeDir));
+		#endif
 		}
 	}
 

@@ -51,7 +51,11 @@ void Player::update(float delta)
 	if (_inputState->GetInputAry()[static_cast<int>(INPUT_ID::BTN_1)][nowTrg]
 	 & ~_inputState->GetInputAry()[static_cast<int>(INPUT_ID::BTN_1)][oldTrg])
 	{
-		lpEffectMng.GetEmitter("Laser", this->_dir, this->getPosition())->play();
+		auto effect = lpEffectMng.GetEmitter("Laser", this->_dir, this->getPosition());
+		if (!effect->isPlaying())
+		{
+			effect->play();
+		}
 	}
 
 	// ±ÆÒ°¼®İ‚ğØ‚è‘Ö‚¦

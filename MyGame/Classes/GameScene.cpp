@@ -276,8 +276,9 @@ bool GameScene::EffectSetUp(void)
 
 bool GameScene::SoundSetUp(void)
 {
-	SET_SOUND("piano", "dsptouch.ckb");
+	SET_SOUND("piano", "dsptouch.ckb", true);
 	SOUND("piano")[1]->setLoopCount(-1);
+	SET_SOUND("walk", "soundeffects.cks", false);
 
 	return true;
 }

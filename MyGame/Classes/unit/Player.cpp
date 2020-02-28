@@ -48,6 +48,7 @@ void Player::update(float delta)
 	_oldState = _nowState;
 	_actCtrl->Update(*this);
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	if (_inputState->GetInputAry()[static_cast<int>(INPUT_ID::BTN_1)][nowTrg]
 	 & ~_inputState->GetInputAry()[static_cast<int>(INPUT_ID::BTN_1)][oldTrg])
 	{
@@ -57,6 +58,17 @@ void Player::update(float delta)
 			effect->play();
 		}
 	}
+#else
+	if (_inputState->GetInputAry()[static_cast<int>(INPUT_ID::DOWN)][nowTrg]
+	 & ~_inputState->GetInputAry()[static_cast<int>(INPUT_ID::DOWN)][oldTrg])
+	{
+		auto effect = lpEffectMng.GetEmitter("Laser", this->_dir, this->getPosition());
+		if (!effect->isPlaying())
+		{
+			effect->play();
+		}
+	}
+#endif
 
 	// ±ÆÒ°¼®İ‚ğØ‚è‘Ö‚¦
 	if (_nowState != _oldState)

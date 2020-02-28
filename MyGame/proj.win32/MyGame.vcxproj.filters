@@ -111,9 +111,6 @@
     <ClInclude Include="..\Classes\unit\Enemy.h">
       <Filter>unit</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\unit\Player.h">
-      <Filter>unit</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\input\OPRT_key.h">
       <Filter>input</Filter>
     </ClInclude>
@@ -164,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\EffekseerForCocos2d-x143c\Players\Cocos2d-x_v3\EffekseerRendererNative.h">
       <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\unit\Player.h">
+      <Filter>unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
